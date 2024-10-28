@@ -1,5 +1,8 @@
 #root {
   margin: 0 auto;
+  --color-white: white;
+  --color-black: black;
+  --color-blue: #35B8BE;
 }
 
 
