@@ -34,8 +34,8 @@ function App() {
         <div className="item-list">
             <h1>Items List</h1>
             <ul>
-                {goods.map((item, index) => (
-                    <li key={index} className="item">
+                {goods.map((item) => (
+                    <li key={item.id} className="item">
                         <h2>{item.name}</h2>
                         <p><strong>Brand:</strong> {item.brand}</p>
                         <p><strong>Price:</strong> ${item.price}</p>
