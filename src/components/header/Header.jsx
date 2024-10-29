@@ -1,6 +1,6 @@
 import './Header.css';
-import logoImage from '../../assets/Logo.png';
-import cartImage from '../../assets/cart.png';
+import logoImage from '../../assets/icons/Logo.png';
+import cartImage from '../../assets/icons/cart.png';
 
 function Header() {
 
