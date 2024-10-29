@@ -2,6 +2,7 @@ import './MenuPage.css';
 import { useState } from "react";
 import MenuItem from "../../components/menuItem/MenuItem.jsx";
 import Button from "../../components/button/Button.jsx";
+import Tooltip from "../../components/tooltip/Tooltip.jsx";
 
 
 const menuItems = [
@@ -55,7 +56,7 @@ const MenuPage = () => {
     return (
         <div className="menu">
             <h1>Browse our menu</h1>
-            <p>Use our menu to place an order online, or phone our store to place a pickup order. Fast and fresh food.</p>
+            <p>Use our menu to place an order online, or <Tooltip text="phone" tooltipText="+1-234-567-8901" /> our store to place a pickup order. Fast and fresh food.</p>
             <div className="categories">
                 <Button label="Desert" onClick={() => setSelectedCategory('Desert')} variant="primary" />
                 <Button label="Dinner" onClick={() => setSelectedCategory('Dinner')} variant="secondary" />
