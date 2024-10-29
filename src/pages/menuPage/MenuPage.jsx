@@ -67,6 +67,7 @@ const MenuPage = () => {
                     <MenuItem key={item.id} item={item} />
                 ))}
             </div>
+            <Button label="See more" onClick={() => console.log('See more clicked')} variant="primary" />
         </div>
     );
 };
