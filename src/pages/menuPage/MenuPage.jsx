@@ -1,6 +1,7 @@
 import './MenuPage.css';
 import { useState } from "react";
 import MenuItem from "../../components/menuItem/MenuItem.jsx";
+import Button from "../../components/button/Button.jsx";
 
 
 const menuItems = [
@@ -56,9 +57,9 @@ const MenuPage = () => {
             <h1>Browse our menu</h1>
             <p>Use our menu to place an order online, or phone our store to place a pickup order. Fast and fresh food.</p>
             <div className="categories">
-                <button onClick={() => setSelectedCategory('Desert')}>Desert</button>
-                <button onClick={() => setSelectedCategory('Dinner')}>Dinner</button>
-                <button onClick={() => setSelectedCategory('Breakfast')}>Breakfast</button>
+                <Button label="Desert" onClick={() => setSelectedCategory('Desert')} variant="primary" />
+                <Button label="Dinner" onClick={() => setSelectedCategory('Dinner')} variant="secondary" />
+                <Button label="Breakfast" onClick={() => setSelectedCategory('Breakfast')} variant="secondary" />
             </div>
             <div className="menu-items">
                 {menuItems.map(item => (

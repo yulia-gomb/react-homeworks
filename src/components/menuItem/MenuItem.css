@@ -43,12 +43,3 @@
     padding: 5px;
     text-align: center;
 }
-
-.menu-item-actions button {
-    padding: 8px 25px;
-    background-color: var(--color-blue);
-    color: var(--color-white);
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-}

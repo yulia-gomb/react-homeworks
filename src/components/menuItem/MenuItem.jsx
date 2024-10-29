@@ -1,5 +1,6 @@
 import './MenuItem.css';
 import PropTypes from "prop-types";
+import Button from "../button/Button.jsx";
 
 
 const MenuItem = ({ item }) => {
@@ -12,7 +13,11 @@ const MenuItem = ({ item }) => {
                 <p>{item.description}</p>
                 <div className="menu-item-actions">
                     <input type="number" defaultValue={1} min={1}/>
-                    <button>Add to card</button>
+                    <Button
+                        label="Add to card"
+                        onClick={() => console.log('Add to card clicked')}
+                        variant="primary"
+                    />
                 </div>
             </div>
         </div>
