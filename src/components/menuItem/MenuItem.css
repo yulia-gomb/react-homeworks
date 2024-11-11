@@ -1,0 +1,45 @@
+.menu-item {
+    display: flex;
+    align-items: center;
+    text-align: left;
+    border: 1px solid var(--color-blue);
+    border-radius: 6px;
+    max-width: 500px;
+    background-color: var(--color-white);
+    padding: 40px 25px;
+}
+
+.menu-item img {
+    width: 120px;
+    height: 120px;
+}
+
+.menu-item-info {
+    padding-left: 30px;
+}
+
+.menu-item-info h3 {
+    font-weight: bold;
+}
+
+.menu-item-info span {
+    color: var(--color-blue);
+}
+
+.menu-item-info p {
+    font-size: 14px;
+    color: var(--color-grey);
+}
+
+.menu-item-actions {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    gap: 10px;
+}
+
+.menu-item-actions input {
+    width: 50px;
+    padding: 5px;
+    text-align: center;
+}
