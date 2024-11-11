@@ -2,17 +2,19 @@ import './App.css'
 import Header from "./components/header/Header.jsx";
 import Content from "./components/content/Content.jsx";
 import Footer from "./components/footer/Footer.jsx";
+import { Component } from "react";
 
-function App() {
+class App extends Component {
 
-
-    return (
-        <div>
-            <Header/>
-            <Content/>
-            <Footer/>
-        </div>
-    )
+    render() {
+        return (
+            <div>
+                <Header />
+                <Content />
+                <Footer />
+            </div>
+        );
+    }
 }
 
 export default App
