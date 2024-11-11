@@ -14,7 +14,8 @@ class MenuPage extends Component {
             menuItems: [],
             categories: [],
             loading: true,
-            error: null
+            error: null,
+            visibleItemsCount: 6,
         };
     }
 
@@ -44,15 +45,22 @@ class MenuPage extends Component {
     };
 
     handleCategoryClick = (category) => {
-        this.setState({ selectedCategory: category });
+        this.setState({ selectedCategory: category, visibleItemsCount: 6 });
     };
 
     handleSeeMoreClick = () => {
-        console.log('See more clicked');
+        this.setState(prevState => ({
+            visibleItemsCount: prevState.visibleItemsCount + 6
+        }));
     };
 
     render() {
-        const { selectedCategory, menuItems, categories, loading, error } = this.state;
+        const { selectedCategory, menuItems, categories, loading, error, visibleItemsCount } = this.state;
+
+        const filteredItems = menuItems.filter(item => item.category === selectedCategory);
+        const itemsToShow = filteredItems.slice(0, visibleItemsCount);
+
+        const isSeeMoreVisible = filteredItems.length > visibleItemsCount;
 
         return (
             <div className="menu">
@@ -77,18 +85,17 @@ class MenuPage extends Component {
                     ) : error ? (
                         <p>Error: {error}</p>
                     ) : (
-                        menuItems
-                            .filter(item => item.category === selectedCategory)
-                            .map(item => (
-                                <MenuItem key={item.id} item={item} />
-                            ))
+                        itemsToShow.map(item => (
+                            <MenuItem key={item.id} item={item} />
+                        ))
                     )}
                 </div>
-                <Button label="See more" onClick={this.handleSeeMoreClick} variant="primary"/>
+                {isSeeMoreVisible && (
+                    <Button label="See more" onClick={this.handleSeeMoreClick} variant="primary"/>
+                )}
             </div>
         );
     }
 }
 
-
-export default MenuPage
+export default MenuPage;
