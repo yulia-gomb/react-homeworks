@@ -12,25 +12,31 @@ class MenuItem extends Component {
         };
     }
 
+    getTruncatedInstructions = (description) => {
+        return description.length > 100 ? description.slice(0, 100) + '...' : description;
+    };
+
     handleQuantityChange = (event) => {
         this.setState({ quantity: event.target.value });
     };
 
     handleAddToCart = () => {
-        console.log('Add to cart clicked');
+        console.log(`Added ${this.state.quantity} item(s) to the cart.`);
     };
+
 
     render() {
         const { item } = this.props;
         const { quantity } = this.state;
+        const truncatedInstructions = this.getTruncatedInstructions(item.instructions);
 
         return (
             <div className="menu-item">
-                <img src={item.image} alt={item.name} />
+                <img src={item.img} alt={item.meal} />
                 <div className="menu-item-info">
-                    <h3>{item.name}</h3>
+                    <h3>{item.meal}</h3>
                     <span>$ {item.price} USD</span>
-                    <p>{item.description}</p>
+                    <p>{truncatedInstructions}</p>
                     <div className="menu-item-actions">
                         <input
                             type="number"
@@ -52,9 +58,9 @@ class MenuItem extends Component {
 
 MenuItem.propTypes = {
     item: PropTypes.shape({
-        image: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
+        img: PropTypes.string.isRequired,
+        meal: PropTypes.string.isRequired,
+        instructions: PropTypes.string.isRequired,
         price: PropTypes.number.isRequired,
     }).isRequired,
 };

@@ -4,65 +4,44 @@ import Button from "../../components/button/Button.jsx";
 import Tooltip from "../../components/tooltip/Tooltip.jsx";
 import { Component } from "react";
 
-
-const menuItems = [
-    {
-        id: 0,
-        name: "Burger Dreams",
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-        price: 9.20,
-        image: "src/assets/images/burger-1.png",
-    },
-    {
-        id: 1,
-        name: "Burger Waldo",
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-        price: 10.00,
-        image: "src/assets/images/burger-2.png",
-    },
-    {
-        id: 2,
-        name: "Burger Cali",
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-        price: 8.00,
-        image: "src/assets/images/burger-3.png",
-    },
-    {
-        id: 3,
-        name: "Burger Bacon Buddy",
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-        price: 9.99,
-        image: "src/assets/images/burger-4.png",
-    },
-    {
-        id: 4,
-        name: "Burger Spicy",
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-        price: 9.20,
-        image: "src/assets/images/burger-5.png",
-    },
-    {
-        id: 5,
-        name: "Burger Classic",
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-        price: 8.20,
-        image: "src/assets/images/burger-6.png",
-    },
-];
-
-const categories = [
-    { label: "Dessert", variant: "primary" },
-    { label: "Dinner", variant: "secondary" },
-    { label: "Breakfast", variant: "secondary" }
-];
+const API_URL = "https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/meals";
 
 class MenuPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedCategory: categories[0]
+            selectedCategory: null,
+            menuItems: [],
+            categories: [],
+            loading: true,
+            error: null
         };
     }
+
+    componentDidMount() {
+        this.fetchMenuItems();
+    }
+
+    fetchMenuItems = async () => {
+        try {
+            const response = await fetch(API_URL);
+            if (!response.ok) {
+                throw new Error('Error fetching data');
+            }
+            const data = await response.json();
+
+            const categories = Array.from(new Set(data.map(item => item.category)));
+
+            this.setState({
+                menuItems: data,
+                categories: categories,
+                selectedCategory: categories[0],
+                loading: false
+            });
+        } catch (error) {
+            this.setState({ error: error.message, loading: false });
+        }
+    };
 
     handleCategoryClick = (category) => {
         this.setState({ selectedCategory: category });
@@ -73,7 +52,7 @@ class MenuPage extends Component {
     };
 
     render() {
-        const { selectedCategory } = this.state;
+        const { selectedCategory, menuItems, categories, loading, error } = this.state;
 
         return (
             <div className="menu">
@@ -86,16 +65,24 @@ class MenuPage extends Component {
                     {categories.map((category, index) => (
                         <Button
                             key={index}
-                            label={category.label}
+                            label={category}
                             onClick={() => this.handleCategoryClick(category)}
                             variant={selectedCategory === category ? "primary" : "secondary"}
                         />
                     ))}
                 </div>
                 <div className="menu-items">
-                    {menuItems.map(item => (
-                        <MenuItem key={item.id} item={item}/>
-                    ))}
+                    {loading ? (
+                        <p>Loading...</p>
+                    ) : error ? (
+                        <p>Error: {error}</p>
+                    ) : (
+                        menuItems
+                            .filter(item => item.category === selectedCategory)
+                            .map(item => (
+                                <MenuItem key={item.id} item={item} />
+                            ))
+                    )}
                 </div>
                 <Button label="See more" onClick={this.handleSeeMoreClick} variant="primary"/>
             </div>
