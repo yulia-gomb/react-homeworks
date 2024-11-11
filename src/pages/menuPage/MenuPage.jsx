@@ -50,24 +50,46 @@ const menuItems = [
     },
 ];
 
+const categories = [
+    { label: "Dessert", variant: "primary" },
+    { label: "Dinner", variant: "secondary" },
+    { label: "Breakfast", variant: "secondary" }
+];
+
 const MenuPage = () => {
-    const [selectedCategory, setSelectedCategory] = useState('Desert');
+    const [selectedCategory, setSelectedCategory] = useState(categories[0].label);
+
+    const handleCategoryClick = (category) => {
+        setSelectedCategory(category);
+    };
+
+    const handleSeeMoreClick = () => {
+        console.log('See more clicked');
+    };
 
     return (
         <div className="menu">
             <h1>Browse our menu</h1>
-            <p>Use our menu to place an order online, or <Tooltip text="phone" tooltipText="+1-234-567-8901" /> our store to place a pickup order. Fast and fresh food.</p>
+            <p>
+                Use our menu to place an order online, or <Tooltip text="phone" tooltipText="+1-234-567-8901"/> our
+                store to place a pickup order. Fast and fresh food.
+            </p>
             <div className="categories">
-                <Button label="Desert" onClick={() => setSelectedCategory('Desert')} variant="primary" />
-                <Button label="Dinner" onClick={() => setSelectedCategory('Dinner')} variant="secondary" />
-                <Button label="Breakfast" onClick={() => setSelectedCategory('Breakfast')} variant="secondary" />
+                {categories.map((category, index) => (
+                    <Button
+                        key={index}
+                        label={category.label}
+                        onClick={() => handleCategoryClick(category.label)}
+                        variant={category.variant}
+                    />
+                ))}
             </div>
             <div className="menu-items">
                 {menuItems.map(item => (
-                    <MenuItem key={item.id} item={item} />
+                    <MenuItem key={item.id} item={item}/>
                 ))}
             </div>
-            <Button label="See more" onClick={() => console.log('See more clicked')} variant="primary" />
+            <Button label="See more" onClick={handleSeeMoreClick} variant="primary"/>
         </div>
     );
 };
