@@ -1,16 +1,21 @@
 import './Button.css'
 import PropTypes from "prop-types";
+import { Component } from "react";
 
-const Button = ({ label, onClick, variant = 'primary'}) => {
-    return (
-        <button
-            className={`button ${variant}`}
-            onClick={onClick}
-        >
-            {label}
-        </button>
-    );
-};
+class Button extends Component {
+    render() {
+        const { label, onClick, variant = 'secondary' } = this.props;
+
+        return (
+            <button
+                className={`button ${variant}`}
+                onClick={onClick}
+            >
+                {label}
+            </button>
+        );
+    }
+}
 
 Button.propTypes = {
     label: PropTypes.string.isRequired,
