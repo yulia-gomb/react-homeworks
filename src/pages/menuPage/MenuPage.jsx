@@ -57,7 +57,7 @@ const categories = [
 ];
 
 const MenuPage = () => {
-    const [selectedCategory, setSelectedCategory] = useState(categories[0].label);
+    const [selectedCategory, setSelectedCategory] = useState(categories[0]);
 
     const handleCategoryClick = (category) => {
         setSelectedCategory(category);
@@ -79,8 +79,8 @@ const MenuPage = () => {
                     <Button
                         key={index}
                         label={category.label}
-                        onClick={() => handleCategoryClick(category.label)}
-                        variant={category.variant}
+                        onClick={() => handleCategoryClick(category)}
+                        variant={selectedCategory === category ? "primary" : "secondary"}
                     />
                 ))}
             </div>
