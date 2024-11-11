@@ -1,8 +1,8 @@
 import './MenuPage.css';
-import { useState } from "react";
 import MenuItem from "../../components/menuItem/MenuItem.jsx";
 import Button from "../../components/button/Button.jsx";
 import Tooltip from "../../components/tooltip/Tooltip.jsx";
+import { Component } from "react";
 
 
 const menuItems = [
@@ -56,43 +56,52 @@ const categories = [
     { label: "Breakfast", variant: "secondary" }
 ];
 
-const MenuPage = () => {
-    const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+class MenuPage extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            selectedCategory: categories[0]
+        };
+    }
 
-    const handleCategoryClick = (category) => {
-        setSelectedCategory(category);
+    handleCategoryClick = (category) => {
+        this.setState({ selectedCategory: category });
     };
 
-    const handleSeeMoreClick = () => {
+    handleSeeMoreClick = () => {
         console.log('See more clicked');
     };
 
-    return (
-        <div className="menu">
-            <h1>Browse our menu</h1>
-            <p>
-                Use our menu to place an order online, or <Tooltip text="phone" tooltipText="+1-234-567-8901"/> our
-                store to place a pickup order. Fast and fresh food.
-            </p>
-            <div className="categories">
-                {categories.map((category, index) => (
-                    <Button
-                        key={index}
-                        label={category.label}
-                        onClick={() => handleCategoryClick(category)}
-                        variant={selectedCategory === category ? "primary" : "secondary"}
-                    />
-                ))}
+    render() {
+        const { selectedCategory } = this.state;
+
+        return (
+            <div className="menu">
+                <h1>Browse our menu</h1>
+                <p>
+                    Use our menu to place an order online, or <Tooltip text="phone" tooltipText="+1-234-567-8901"/> our
+                    store to place a pickup order. Fast and fresh food.
+                </p>
+                <div className="categories">
+                    {categories.map((category, index) => (
+                        <Button
+                            key={index}
+                            label={category.label}
+                            onClick={() => this.handleCategoryClick(category)}
+                            variant={selectedCategory === category ? "primary" : "secondary"}
+                        />
+                    ))}
+                </div>
+                <div className="menu-items">
+                    {menuItems.map(item => (
+                        <MenuItem key={item.id} item={item}/>
+                    ))}
+                </div>
+                <Button label="See more" onClick={this.handleSeeMoreClick} variant="primary"/>
             </div>
-            <div className="menu-items">
-                {menuItems.map(item => (
-                    <MenuItem key={item.id} item={item}/>
-                ))}
-            </div>
-            <Button label="See more" onClick={handleSeeMoreClick} variant="primary"/>
-        </div>
-    );
-};
+        );
+    }
+}
 
 
 export default MenuPage
