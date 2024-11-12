@@ -56,6 +56,7 @@ class MenuPage extends Component {
 
     render() {
         const { selectedCategory, menuItems, categories, loading, error, visibleItemsCount } = this.state;
+        const { onAddToCart } = this.props;
 
         const filteredItems = menuItems.filter(item => item.category === selectedCategory);
         const itemsToShow = filteredItems.slice(0, visibleItemsCount);
@@ -86,7 +87,11 @@ class MenuPage extends Component {
                         <p>Error: {error}</p>
                     ) : (
                         itemsToShow.map(item => (
-                            <MenuItem key={item.id} item={item} />
+                            <MenuItem
+                                key={item.id}
+                                item={item}
+                                onAddToCart={onAddToCart}
+                            />
                         ))
                     )}
                 </div>

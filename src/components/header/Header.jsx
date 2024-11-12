@@ -2,13 +2,16 @@ import './Header.css';
 import logoImage from '../../assets/icons/Logo.png';
 import cartImage from '../../assets/icons/cart.png';
 import { Component } from "react";
+import PropTypes from "prop-types";
 
 class Header extends Component {
     render() {
+        const { cartCount } = this.props;
+
         return (
             <header className="header">
                 <div className="logo">
-                    <img src={logoImage} alt="Logo" className="logo-image" />
+                    <img src={logoImage} alt="Logo" className="logo-image"/>
                 </div>
 
                 <nav className="nav">
@@ -19,12 +22,16 @@ class Header extends Component {
                 </nav>
 
                 <div className="cart">
-                    <img src={cartImage} alt="Cart" className="cart-icon" />
-                    <span className="cart-count">3</span>
+                    <img src={cartImage} alt="Cart" className="cart-icon"/>
+                    <span className="cart-count">{cartCount}</span>
                 </div>
             </header>
         );
     }
 }
 
-export default Header
+Header.propTypes = {
+    cartCount: PropTypes.number.isRequired,
+};
+
+export default Header;
