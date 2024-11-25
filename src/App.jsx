@@ -16,7 +16,6 @@ class App extends Component {
         this.setState(prevState => {
             const cartItems = { ...prevState.cartItems };
             cartItems[itemId] = (cartItems[itemId] || 0) + quantity;
-            console.log(cartItems);
             return { cartItems };
         });
     };

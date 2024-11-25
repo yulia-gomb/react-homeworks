@@ -35,7 +35,7 @@ class MenuPage extends Component {
 
             this.setState({
                 menuItems: data,
-                categories: categories,
+                categories,
                 selectedCategory: categories[0],
                 loading: false
             });
