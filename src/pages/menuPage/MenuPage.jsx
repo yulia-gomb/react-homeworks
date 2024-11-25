@@ -1,98 +1,106 @@
 import './MenuPage.css';
-import { useState } from "react";
 import MenuItem from "../../components/menuItem/MenuItem.jsx";
 import Button from "../../components/button/Button.jsx";
 import Tooltip from "../../components/tooltip/Tooltip.jsx";
+import { Component } from "react";
 
+const API_URL = "https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/meals";
 
-const menuItems = [
-    {
-        id: 0,
-        name: "Burger Dreams",
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-        price: 9.20,
-        image: "src/assets/images/burger-1.png",
-    },
-    {
-        id: 1,
-        name: "Burger Waldo",
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-        price: 10.00,
-        image: "src/assets/images/burger-2.png",
-    },
-    {
-        id: 2,
-        name: "Burger Cali",
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-        price: 8.00,
-        image: "src/assets/images/burger-3.png",
-    },
-    {
-        id: 3,
-        name: "Burger Bacon Buddy",
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-        price: 9.99,
-        image: "src/assets/images/burger-4.png",
-    },
-    {
-        id: 4,
-        name: "Burger Spicy",
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-        price: 9.20,
-        image: "src/assets/images/burger-5.png",
-    },
-    {
-        id: 5,
-        name: "Burger Classic",
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-        price: 8.20,
-        image: "src/assets/images/burger-6.png",
-    },
-];
+class MenuPage extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            selectedCategory: null,
+            menuItems: [],
+            categories: [],
+            loading: true,
+            error: null,
+            visibleItemsCount: 6,
+        };
+    }
 
-const categories = [
-    { label: "Dessert", variant: "primary" },
-    { label: "Dinner", variant: "secondary" },
-    { label: "Breakfast", variant: "secondary" }
-];
+    componentDidMount() {
+        this.fetchMenuItems();
+    }
 
-const MenuPage = () => {
-    const [selectedCategory, setSelectedCategory] = useState(categories[0].label);
+    fetchMenuItems = async () => {
+        try {
+            const response = await fetch(API_URL);
+            if (!response.ok) {
+                throw new Error('Error fetching data');
+            }
+            const data = await response.json();
 
-    const handleCategoryClick = (category) => {
-        setSelectedCategory(category);
+            const categories = Array.from(new Set(data.map(item => item.category)));
+
+            this.setState({
+                menuItems: data,
+                categories,
+                selectedCategory: categories[0],
+                loading: false
+            });
+        } catch (error) {
+            this.setState({ error: error.message, loading: false });
+        }
     };
 
-    const handleSeeMoreClick = () => {
-        console.log('See more clicked');
+    handleCategoryClick = (category) => {
+        this.setState({ selectedCategory: category, visibleItemsCount: 6 });
     };
 
-    return (
-        <div className="menu">
-            <h1>Browse our menu</h1>
-            <p>
-                Use our menu to place an order online, or <Tooltip text="phone" tooltipText="+1-234-567-8901"/> our
-                store to place a pickup order. Fast and fresh food.
-            </p>
-            <div className="categories">
-                {categories.map((category, index) => (
-                    <Button
-                        key={index}
-                        label={category.label}
-                        onClick={() => handleCategoryClick(category.label)}
-                        variant={category.variant}
-                    />
-                ))}
-            </div>
-            <div className="menu-items">
-                {menuItems.map(item => (
-                    <MenuItem key={item.id} item={item}/>
-                ))}
-            </div>
-            <Button label="See more" onClick={handleSeeMoreClick} variant="primary"/>
-        </div>
-    );
-};
+    handleSeeMoreClick = () => {
+        this.setState(prevState => ({
+            visibleItemsCount: prevState.visibleItemsCount + 6
+        }));
+    };
 
+    render() {
+        const { selectedCategory, menuItems, categories, loading, error, visibleItemsCount } = this.state;
+        const { onAddToCart } = this.props;
 
-export default MenuPage
+        const filteredItems = menuItems.filter(item => item.category === selectedCategory);
+        const itemsToShow = filteredItems.slice(0, visibleItemsCount);
+
+        const isSeeMoreVisible = filteredItems.length > visibleItemsCount;
+
+        return (
+            <div className="menu">
+                <h1>Browse our menu</h1>
+                <p>
+                    Use our menu to place an order online, or <Tooltip text="phone" tooltipText="+1-234-567-8901"/> our
+                    store to place a pickup order. Fast and fresh food.
+                </p>
+                <div className="categories">
+                    {categories.map((category, index) => (
+                        <Button
+                            key={index}
+                            label={category}
+                            onClick={() => this.handleCategoryClick(category)}
+                            variant={selectedCategory === category ? "primary" : "secondary"}
+                        />
+                    ))}
+                </div>
+                <div className="menu-items">
+                    {loading ? (
+                        <p>Loading...</p>
+                    ) : error ? (
+                        <p>Error: {error}</p>
+                    ) : (
+                        itemsToShow.map(item => (
+                            <MenuItem
+                                key={item.id}
+                                item={item}
+                                onAddToCart={onAddToCart}
+                            />
+                        ))
+                    )}
+                </div>
+                {isSeeMoreVisible && (
+                    <Button label="See more" onClick={this.handleSeeMoreClick} variant="primary"/>
+                )}
+            </div>
+        );
+    }
+}
+
+export default MenuPage;
