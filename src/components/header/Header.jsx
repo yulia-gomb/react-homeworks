@@ -2,6 +2,7 @@ import './Header.css';
 import logoImage from '../../assets/icons/Logo.png';
 import cartImage from '../../assets/icons/cart.png';
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const Header = ({ cartCount }) => {
     return (
@@ -11,10 +12,10 @@ const Header = ({ cartCount }) => {
             </div>
 
             <nav className="nav">
-                <a href="#home" className="nav-item">Home</a>
-                <a href="#menu" className="nav-item active-item">Menu</a>
-                <a href="#company" className="nav-item">Company</a>
-                <a href="#login" className="nav-item">Login</a>
+                <Link to="/" className="nav-item">Home</Link>
+                <Link to="/menu" className="nav-item">Menu</Link>
+                <Link to="/company" className="nav-item">Company</Link>
+                <Link to="/login" className="nav-item">Login</Link>
             </nav>
 
             <div className="cart">
