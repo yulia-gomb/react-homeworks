@@ -1,16 +1,19 @@
 import './Tooltip.css';
-import { Component } from "react";
+import PropTypes from "prop-types";
 
-class Tooltip extends Component {
-    render() {
-        const { text, tooltipText } = this.props;
-        return (
-            <span className="tooltip">
-                {text}
-                <span className="tooltip-text">{tooltipText}</span>
-            </span>
-        );
-    }
-}
+
+const Tooltip = ({ text, tooltipText }) => {
+    return (
+        <span className="tooltip">
+            {text}
+            <span className="tooltip-text">{tooltipText}</span>
+        </span>
+    );
+};
+
+Tooltip.propTypes = {
+    text: PropTypes.string.isRequired,
+    tooltipText: PropTypes.string.isRequired,
+};
 
 export default Tooltip;

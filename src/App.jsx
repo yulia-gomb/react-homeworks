@@ -2,41 +2,32 @@ import './App.css';
 import Header from "./components/header/Header.jsx";
 import Content from "./components/content/Content.jsx";
 import Footer from "./components/footer/Footer.jsx";
-import { Component } from "react";
+import { useState } from "react";
 
-class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            cartItems: {},
-        };
-    }
 
-    handleAddToCart = (itemId, quantity) => {
-        this.setState(prevState => {
-            const cartItems = { ...prevState.cartItems };
-            cartItems[itemId] = (cartItems[itemId] || 0) + quantity;
-            return { cartItems };
-        });
+const App = () => {
+    const [cartItems, setCartItems] = useState({});
+
+    const handleAddToCart = (itemId, quantity) => {
+        setCartItems(prevCartItems => ({
+            ...prevCartItems,
+            [itemId]: (prevCartItems[itemId] || 0) + quantity,
+        }));
     };
 
-    getCartCount = () => {
-        const { cartItems } = this.state;
+    const getCartCount = () => {
         return Object.values(cartItems).reduce((total, count) => total + count, 0);
     };
 
-    render() {
-        const { cartItems } = this.state;
-        const cartCount = this.getCartCount();
+    const cartCount = getCartCount();
 
-        return (
-            <div>
-                <Header cartCount={cartCount} />
-                <Content onAddToCart={this.handleAddToCart} />
-                <Footer />
-            </div>
-        );
-    }
-}
+    return (
+        <div>
+            <Header cartCount={cartCount} />
+            <Content onAddToCart={handleAddToCart} />
+            <Footer />
+        </div>
+    );
+};
 
 export default App;

@@ -3,15 +3,14 @@ import logoImage from '../../assets/icons/Logo.png';
 import instLogo from '../../assets/icons/inst.png';
 import twitterLogo from '../../assets/icons/twitter.png';
 import youtubeLogo from '../../assets/icons/yt.png';
-import { Component } from "react";
 
-class Footer extends Component {
-    render() {
-        const footerLinks = {
-            company: ["Home", "Order", "FAQ", "Contact"],
-            template: ["Style Guide", "Changelog", "Licence", "Webflow University"],
-            flowbase: ["More Cloneables"]
-        };
+
+const Footer = () => {
+    const footerLinks = {
+        company: ["Home", "Order", "FAQ", "Contact"],
+        template: ["Style Guide", "Changelog", "Licence", "Webflow University"],
+        flowbase: ["More Cloneables"]
+    };
 
         const LINK_URL = "https://www.google.com/";
 
@@ -72,7 +71,7 @@ class Footer extends Component {
                 </div>
             </footer>
         );
-    }
+
 }
 
 export default Footer
