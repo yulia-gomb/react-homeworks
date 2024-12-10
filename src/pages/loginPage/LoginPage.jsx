@@ -1,11 +1,13 @@
 import './LoginPage.css';
 import Button from "../../components/button/Button.jsx";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 const LoginPage = () => {
     const [formData, setFormData] = useState({ username: '', password: '' });
     const [errors, setErrors] = useState({ username: '', password: '' });
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -42,8 +44,7 @@ const LoginPage = () => {
                 console.log('User already exists');
             }
 
-            setFormData({ username: '', password: '' });
-            setErrors({ username: '', password: '' });
+            navigate('/');
         }
     };
 
