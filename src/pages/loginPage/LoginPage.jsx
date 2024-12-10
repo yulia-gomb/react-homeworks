@@ -30,7 +30,20 @@ const LoginPage = () => {
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
         } else {
-            console.log('Form submitted:', formData);
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const userExists = users.some(user => user.username === formData.username);
+
+            if (!userExists) {
+                const newUser = { ...formData };
+                users.push(newUser);
+                localStorage.setItem('users', JSON.stringify(users));
+                console.log('New user added:', newUser);
+            } else {
+                console.log('User already exists');
+            }
+
+            setFormData({ username: '', password: '' });
+            setErrors({ username: '', password: '' });
         }
     };
 
