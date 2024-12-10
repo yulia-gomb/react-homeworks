@@ -1,8 +1,12 @@
 import './App.css';
 import Header from "./components/header/Header.jsx";
-import Content from "./components/content/Content.jsx";
 import Footer from "./components/footer/Footer.jsx";
 import { useState } from "react";
+import HomePage from "./pages/homePage/HomePage.jsx";
+import MenuPage from "./pages/menuPage/MenuPage.jsx";
+import { Routes, Route } from 'react-router-dom';
+import NotFoundPage from "./pages/notFoundPage/NotFoundPage.jsx";
+import LoginPage from "./pages/loginPage/LoginPage.jsx";
 
 
 const App = () => {
@@ -22,11 +26,16 @@ const App = () => {
     const cartCount = getCartCount();
 
     return (
-        <div>
+        <>
             <Header cartCount={cartCount} />
-            <Content onAddToCart={handleAddToCart} />
+            <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/menu" element={<MenuPage onAddToCart={handleAddToCart} />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="*" element={<NotFoundPage />} />
+            </Routes>
             <Footer />
-        </div>
+        </>
     );
 };
 
