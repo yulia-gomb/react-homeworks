@@ -9,21 +9,25 @@ import NotFoundPage from "./pages/notFoundPage/NotFoundPage.jsx";
 import LoginPage from "./pages/loginPage/LoginPage.jsx";
 
 
-const App = () => {
-    const [cartItems, setCartItems] = useState({});
+interface CartItems {
+    [key: string]: number;
+}
 
-    const handleAddToCart = (itemId, quantity) => {
+const App = () => {
+    const [cartItems, setCartItems] = useState<CartItems>({});
+
+    const handleAddToCart = (itemId: string, quantity: number): void => {
         setCartItems(prevCartItems => ({
             ...prevCartItems,
             [itemId]: (prevCartItems[itemId] || 0) + quantity,
         }));
     };
 
-    const getCartCount = () => {
+    const getCartCount = (): number => {
         return Object.values(cartItems).reduce((total, count) => total + count, 0);
     };
 
-    const cartCount = getCartCount();
+    const cartCount: number = getCartCount();
 
     return (
         <>
