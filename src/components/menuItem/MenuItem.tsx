@@ -5,10 +5,11 @@ import { ChangeEvent, useState } from "react";
 interface MenuItemProps {
     item: {
         id: string;
-        img: string;
         meal: string;
-        instructions: string;
+        category?: string;
+        img: string;
         price: number;
+        instructions: string;
     };
     onAddToCart: (itemId: string, quantity: number) => void;
 }
