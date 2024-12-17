@@ -1,5 +1,5 @@
 import './LoginPage.css';
-import Button from "../../components/button/Button.jsx";
+import Button from "../../components/button/Button.tsx";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 

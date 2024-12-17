@@ -1,6 +1,6 @@
 import './MenuItem.css';
 import PropTypes from "prop-types";
-import Button from "../button/Button.jsx";
+import Button from "../button/Button.tsx";
 import { useState } from "react";
 
 

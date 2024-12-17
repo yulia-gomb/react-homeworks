@@ -10,7 +10,7 @@ import {
     TrustPilotText,
     Highlight
 } from "./HomePage.styled.js";
-import Button from "../../components/button/Button.jsx";
+import Button from "../../components/button/Button.tsx";
 import { useNavigate } from "react-router-dom";
 import homeImage from '../../assets/images/home.png';
 
