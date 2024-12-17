@@ -4,7 +4,7 @@ import Button from "../../components/button/Button.tsx";
 import Tooltip from "../../components/tooltip/Tooltip.tsx";
 import { useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
-import useFetch from "../../utils/useFetch.js";
+import useFetch from "../../utils/useFetch.ts";
 
 const API_URL = "https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/meals";
 
