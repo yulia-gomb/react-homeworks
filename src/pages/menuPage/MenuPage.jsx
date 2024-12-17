@@ -1,5 +1,5 @@
 import './MenuPage.css';
-import MenuItem from "../../components/menuItem/MenuItem.jsx";
+import MenuItem from "../../components/menuItem/MenuItem.tsx";
 import Button from "../../components/button/Button.tsx";
 import Tooltip from "../../components/tooltip/Tooltip.tsx";
 import { useEffect, useMemo, useState } from "react";

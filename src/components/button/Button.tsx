@@ -7,7 +7,7 @@ interface ButtonProps {
     variant?: 'primary' | 'secondary';
 }
 
-const Button: React.FC<ButtonProps> = ({ label, onClick, variant = 'secondary' }) => {
+const Button = ({ label, onClick, variant = 'secondary' }: ButtonProps) => {
     return (
         <button className={`button ${variant}`} onClick={onClick}>
             {label}
