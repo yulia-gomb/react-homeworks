@@ -1,7 +1,7 @@
 import './MenuPage.css';
 import MenuItem from "../../components/menuItem/MenuItem.jsx";
 import Button from "../../components/button/Button.tsx";
-import Tooltip from "../../components/tooltip/Tooltip.jsx";
+import Tooltip from "../../components/tooltip/Tooltip.tsx";
 import { useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import useFetch from "../../utils/useFetch.js";
