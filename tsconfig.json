@@ -21,7 +21,7 @@
     "types": ["react-next", "react-dom/next"],
   },
   "include": [
-    "src", "**/*.ts", "**/*.tsx", "custom.d.ts"
+    "src", "**/*.ts", "**/*.tsx", "src/custom.d.ts"
   ],
   "exclude": [
     "node_modules"
