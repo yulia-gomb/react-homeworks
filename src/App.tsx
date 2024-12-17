@@ -6,7 +6,7 @@ import HomePage from "./pages/homePage/HomePage.jsx";
 import MenuPage from "./pages/menuPage/MenuPage.jsx";
 import { Routes, Route } from 'react-router-dom';
 import NotFoundPage from "./pages/notFoundPage/NotFoundPage";
-import LoginPage from "./pages/loginPage/LoginPage.jsx";
+import LoginPage from "./pages/loginPage/LoginPage";
 
 
 interface CartItems {

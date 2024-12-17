@@ -1,15 +1,24 @@
 import './LoginPage.css';
-import Button from "../../components/button/Button.tsx";
-import { useState } from "react";
+import Button from "../../components/button/Button";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+interface FormData {
+    username: string;
+    password: string;
+}
 
-const LoginPage = () => {
+interface FormErrors {
+    username: string;
+    password: string;
+}
+
+const LoginPage: React.FC = () => {
     const [formData, setFormData] = useState({ username: '', password: '' });
     const [errors, setErrors] = useState({ username: '', password: '' });
     const navigate = useNavigate();
 
-    const handleChange = (e) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
 
@@ -18,10 +27,10 @@ const LoginPage = () => {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: FormEvent): void => {
         e.preventDefault();
 
-        const newErrors = {};
+        const newErrors: Partial<FormErrors> = {};
         if (!formData.username.trim()) {
             newErrors.username = 'User name is required.';
         }
@@ -30,9 +39,9 @@ const LoginPage = () => {
         }
 
         if (Object.keys(newErrors).length > 0) {
-            setErrors(newErrors);
+            setErrors((prev) => ({ ...prev, ...newErrors }));
         } else {
-            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const users = JSON.parse(localStorage.getItem('users') || '[]') as FormData[];
             const userExists = users.some(user => user.username === formData.username);
 
             if (!userExists) {
@@ -48,7 +57,7 @@ const LoginPage = () => {
         }
     };
 
-    const handleCancel = () => {
+    const handleCancel = (): void => {
         setFormData({ username: '', password: '' });
         setErrors({ username: '', password: '' });
     };
