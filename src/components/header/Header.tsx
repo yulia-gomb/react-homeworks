@@ -22,8 +22,10 @@ const Header = ({ cartCount }: HeaderProps) => {
             </nav>
 
             <div className="cart">
-                <img src={cartImage} alt="Cart" className="cart-icon" />
-                <span className="cart-count">{cartCount}</span>
+                <Link to="/order">
+                    <img src={cartImage} alt="Cart" className="cart-icon" />
+                    <span className="cart-count">{cartCount}</span>
+                </Link>
             </div>
         </header>
     );

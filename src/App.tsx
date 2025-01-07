@@ -6,8 +6,9 @@ import MenuPage from "./pages/menuPage/MenuPage";
 import { Routes, Route } from 'react-router-dom';
 import NotFoundPage from "./pages/notFoundPage/NotFoundPage";
 import LoginPage from "./pages/loginPage/LoginPage";
-import { addToCart, selectCartCount } from "./store/cartSlice";
+import { selectCartCount } from "./store/cartSlice";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
+import OrderPage from "./pages/orderPage/OrderPage";
 
 
 const App = () => {
@@ -15,9 +16,6 @@ const App = () => {
 
     const cartCount = useAppSelector(selectCartCount);
 
-    const handleAddToCart = (itemId: string, quantity: number): void => {
-        dispatch(addToCart({ id: itemId, quantity }));
-    };
 
     return (
         <>
@@ -26,6 +24,7 @@ const App = () => {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/menu" element={<MenuPage/>} />
                 <Route path="/login" element={<LoginPage />} />
+                <Route path="/order" element={<OrderPage />} />
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
             <Footer />

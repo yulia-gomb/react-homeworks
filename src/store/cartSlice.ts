@@ -31,10 +31,21 @@ const cartSlice = createSlice({
                 state.items.push({ id, meal, img, price, quantity });
             }
         },
+        updateQuantity(state, action: PayloadAction<{ id: string; quantity: number }>) {
+            const { id, quantity } = action.payload;
+            const existingItem = state.items.find(item => item.id === id);
+
+            if (existingItem) {
+                existingItem.quantity = quantity;
+            }
+        },
+        removeFromCart(state, action: PayloadAction<string>) {
+            state.items = state.items.filter(item => item.id !== action.payload);
+        },
     },
 });
 
-export const { addToCart } = cartSlice.actions;
+export const { addToCart, updateQuantity, removeFromCart } = cartSlice.actions;
 
 export const selectCartCount = (state: { cart: CartState }) =>
     state.cart.items.reduce((total, item) => total + item.quantity, 0);
