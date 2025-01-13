@@ -2,12 +2,16 @@ import './Header.css';
 import logoImage from '../../assets/icons/Logo.png';
 import cartImage from '../../assets/icons/cart.png';
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 type HeaderProps = {
     cartCount: number;
 };
 
 const Header = ({ cartCount }: HeaderProps) => {
+    const { isLoggedIn, username } = useSelector((state: RootState) => state.login);
+
     return (
         <header className="header">
             <div className="logo">
@@ -33,12 +37,17 @@ const Header = ({ cartCount }: HeaderProps) => {
                 >
                     Company
                 </NavLink>
-                <NavLink
-                    to="/login"
-                    className={({ isActive }) => isActive ? "nav-item active-item" : "nav-item"}
-                >
-                    Login
-                </NavLink>
+                {isLoggedIn ? (
+                    <span className="nav-item username">Welcome, {username}!</span>
+                ) : (
+                    <NavLink
+                        to="/login"
+                        className={({ isActive }) => isActive ? "nav-item active-item" : "nav-item"}
+                    >
+                        Login
+                    </NavLink>
+                )}
+
             </nav>
 
             <div className="cart">

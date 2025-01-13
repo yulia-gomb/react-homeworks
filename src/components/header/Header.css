@@ -22,6 +22,12 @@
     font-size: 20px;
 }
 
+.username {
+    color: var(--color-grey);
+    text-decoration: none;
+    font-weight: bold;
+}
+
 .nav-item:hover {
     color: var(--color-blue);
 }

@@ -2,7 +2,7 @@ import './LoginPage.css';
 import Button from "../../components/button/Button";
 import React, { ChangeEvent, FormEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setFormData, setErrors, resetForm } from "../../store/loginSlice";
+import {setFormData, setErrors, resetForm, loginSuccess} from "../../store/loginSlice";
 import { RootState } from "../../store/store";
 import { useNavigate } from "react-router-dom";
 
@@ -41,6 +41,7 @@ const LoginPage: React.FC = () => {
                 console.log('User already exists');
             }
 
+            dispatch(loginSuccess(formData.username));
             navigate('/');
         }
     };

@@ -13,11 +13,15 @@ interface FormErrors {
 interface LoginState {
     formData: FormData;
     errors: FormErrors;
+    isLoggedIn: boolean;
+    username: string | null;
 }
 
 const initialState: LoginState = {
     formData: { username: '', password: '' },
     errors: { username: '', password: '' },
+    isLoggedIn: false,
+    username: null,
 };
 
 const loginSlice = createSlice({
@@ -38,10 +42,16 @@ const loginSlice = createSlice({
         resetForm(state) {
             state.formData = { username: '', password: '' };
             state.errors = { username: '', password: '' };
+            state.isLoggedIn = false;
+            state.username = null;
+        },
+        loginSuccess(state, action: PayloadAction<string>) {
+            state.isLoggedIn = true;
+            state.username = action.payload;
         },
     },
 });
 
-export const { setFormData, setErrors, resetForm } = loginSlice.actions;
+export const { setFormData, setErrors, resetForm, loginSuccess } = loginSlice.actions;
 
 export default loginSlice.reducer;
