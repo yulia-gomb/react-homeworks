@@ -1,7 +1,7 @@
 import './Header.css';
 import logoImage from '../../assets/icons/Logo.png';
 import cartImage from '../../assets/icons/cart.png';
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 type HeaderProps = {
     cartCount: number;
@@ -15,17 +15,37 @@ const Header = ({ cartCount }: HeaderProps) => {
             </div>
 
             <nav className="nav">
-                <Link to="/" className="nav-item">Home</Link>
-                <Link to="/menu" className="nav-item">Menu</Link>
-                <Link to="/company" className="nav-item">Company</Link>
-                <Link to="/login" className="nav-item">Login</Link>
+                <NavLink
+                    to="/"
+                    className={({ isActive }) => isActive ? "nav-item active-item" : "nav-item"}
+                >
+                    Home
+                </NavLink>
+                <NavLink
+                    to="/menu"
+                    className={({ isActive }) => isActive ? "nav-item active-item" : "nav-item"}
+                >
+                    Menu
+                </NavLink>
+                <NavLink
+                    to="/company"
+                    className={({ isActive }) => isActive ? "nav-item active-item" : "nav-item"}
+                >
+                    Company
+                </NavLink>
+                <NavLink
+                    to="/login"
+                    className={({ isActive }) => isActive ? "nav-item active-item" : "nav-item"}
+                >
+                    Login
+                </NavLink>
             </nav>
 
             <div className="cart">
-                <Link to="/order">
+                <NavLink to="/order">
                     <img src={cartImage} alt="Cart" className="cart-icon" />
                     <span className="cart-count">{cartCount}</span>
-                </Link>
+                </NavLink>
             </div>
         </header>
     );
