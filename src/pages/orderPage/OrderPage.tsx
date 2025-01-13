@@ -17,6 +17,11 @@ const OrderPage = () => {
         dispatch(removeFromCart(id));
     };
 
+    const totalAmount = cartItems.reduce(
+        (total, item) => total + item.price * item.quantity,
+        0
+    );
+
     const handleSubmitOrder = () => {
         console.log("Order submitted");
     };
@@ -28,7 +33,7 @@ const OrderPage = () => {
             <div className="order-items">
                 {cartItems.map((item) => (
                     <div key={item.id} className="order-item">
-                        <img src={item.img} alt={item.meal} className="order-item-image" />
+                        <img src={item.img} alt={item.meal} className="order-item-image"/>
                         <div className="order-item-details">
                             <h3>{item.meal}</h3>
                             <span className="order-item-price">$ {item.price.toFixed(2)} USD</span>
@@ -52,6 +57,11 @@ const OrderPage = () => {
                 ))}
             </div>
 
+            <div className="order-total">
+                <h2>Total:</h2>
+                <span className="order-total-amount">$ {totalAmount.toFixed(2)} USD</span>
+            </div>
+
             <form
                 className="order-form"
                 onSubmit={(e) => {
@@ -61,13 +71,13 @@ const OrderPage = () => {
             >
                 <div className="form-group">
                     <label htmlFor="street">Street</label>
-                    <input type="text" id="street" name="street" required />
+                    <input type="text" id="street" name="street" required/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="house">House</label>
-                    <input type="text" id="house" name="house" required />
+                    <input type="text" id="house" name="house" required/>
                 </div>
-                <Button label="Order" variant="primary" />
+                <Button label="Order" variant="primary"/>
             </form>
         </div>
     );

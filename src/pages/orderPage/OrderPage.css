@@ -72,6 +72,25 @@
     cursor: pointer;
 }
 
+.order-total {
+    margin: 0 60px 30px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 30px;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.order-total h2 {
+    margin: 0;
+    font-weight: bold;
+}
+
+.order-total-amount {
+    color: var(--color-blue);
+}
+
 .order-form {
     display: flex;
     flex-direction: column;
