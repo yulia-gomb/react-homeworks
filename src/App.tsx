@@ -9,6 +9,7 @@ import LoginPage from "./pages/loginPage/LoginPage";
 import { selectCartCount } from "./store/cartSlice";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
 import OrderPage from "./pages/orderPage/OrderPage";
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 
 const App = () => {
@@ -24,7 +25,9 @@ const App = () => {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/menu" element={<MenuPage/>} />
                 <Route path="/login" element={<LoginPage />} />
-                <Route path="/order" element={<OrderPage />} />
+                <Route element={<ProtectedRoute />}>
+                    <Route path="/order" element={<OrderPage />} />
+                </Route>
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
             <Footer />
