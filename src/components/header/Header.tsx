@@ -1,7 +1,7 @@
 import './Header.css';
 import logoImage from '../../assets/icons/Logo.png';
 import cartImage from '../../assets/icons/cart.png';
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 
@@ -11,6 +11,11 @@ type HeaderProps = {
 
 const Header = ({ cartCount }: HeaderProps) => {
     const { isLoggedIn, username } = useSelector((state: RootState) => state.login);
+    const navigate = useNavigate();
+
+    const handleLoginClick = () => {
+        navigate("/login", { state: { from: { pathname: "/menu" } } });
+    };
 
     return (
         <header className="header">
@@ -40,12 +45,9 @@ const Header = ({ cartCount }: HeaderProps) => {
                 {isLoggedIn ? (
                     <span className="nav-item username">Welcome, {username}!</span>
                 ) : (
-                    <NavLink
-                        to="/login"
-                        className={({ isActive }) => isActive ? "nav-item active-item" : "nav-item"}
-                    >
+                    <span className="nav-item" onClick={handleLoginClick}>
                         Login
-                    </NavLink>
+                    </span>
                 )}
 
             </nav>

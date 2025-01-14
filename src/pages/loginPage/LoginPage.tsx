@@ -2,16 +2,18 @@ import './LoginPage.css';
 import Button from "../../components/button/Button";
 import React, { ChangeEvent, FormEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {setFormData, setErrors, resetForm, loginSuccess} from "../../store/loginSlice";
+import { setFormData, setErrors, resetForm, loginSuccess } from "../../store/loginSlice";
 import { RootState } from "../../store/store";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const LoginPage: React.FC = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
 
     const formData = useSelector((state: RootState) => state.login.formData);
     const errors = useSelector((state: RootState) => state.login.errors);
+    const redirectTo = location.state?.from?.pathname || "/menu";
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
         const { name, value } = e.target;
@@ -42,7 +44,7 @@ const LoginPage: React.FC = () => {
             }
 
             dispatch(loginSuccess(formData.username));
-            navigate('/');
+            navigate(redirectTo, { replace: true });
         }
     };
 
@@ -55,7 +57,6 @@ const LoginPage: React.FC = () => {
             <h1 className="title">Log in</h1>
             <div className="form-wrapper">
                 <form onSubmit={handleSubmit}>
-                    {/* Username Field */}
                     <div className="form-field">
                         <label htmlFor="username" className="label">User name</label>
                         <input
@@ -70,7 +71,6 @@ const LoginPage: React.FC = () => {
                     </div>
                     <span className="error-text">{errors.username}</span>
 
-                    {/* Password Field */}
                     <div className="form-field">
                         <label htmlFor="password" className="label">Password</label>
                         <input
