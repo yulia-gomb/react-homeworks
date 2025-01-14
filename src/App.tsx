@@ -10,6 +10,7 @@ import { selectCartCount } from "./store/cartSlice";
 import { useAppSelector } from "./store/hooks";
 import OrderPage from "./pages/orderPage/OrderPage";
 import ProtectedRoute from "./pages/ProtectedRoute";
+import OrderConfirmationPage from "./pages/orderConfirmationPage/OrderConfirmationPage";
 
 
 const App = () => {
@@ -26,6 +27,7 @@ const App = () => {
                     <Route element={<ProtectedRoute />}>
                         <Route path="/order" element={<OrderPage />} />
                     </Route>
+                    <Route path="/order-confirmation" element={<OrderConfirmationPage />} />
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>
             </main>

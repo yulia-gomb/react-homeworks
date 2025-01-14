@@ -1,7 +1,7 @@
 import './OrderPage.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
-import { removeFromCart, updateQuantity } from "../../store/cartSlice";
+import { removeFromCart, updateQuantity, clearCart } from "../../store/cartSlice";
 import Button from "../../components/button/Button";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -11,8 +11,8 @@ const OrderPage = () => {
     const cartItems = useSelector((state: RootState) => state.cart.items);
     const [formData, setFormData] = useState({ street: '', house: '' });
     const [errors, setErrors] = useState({ street: '', house: '' });
-
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleQuantityChange = (id: string, quantity: number) => {
         dispatch(updateQuantity({ id, quantity }));
@@ -51,13 +51,17 @@ const OrderPage = () => {
         setErrors(newErrors);
 
         if (formIsValid) {
-            console.log('Order submitted:', formData);
-            alert("Order submitted successfully!");
-            setFormData({ street: '', house: '' });
+            const orderId = Math.floor(100000 + Math.random() * 900000);
+            dispatch(clearCart());
+            navigate("/order-confirmation", {
+                state: {
+                    orderId,
+                    deliveryAddress: `${formData.street}, ${formData.house}`,
+                },
+            });
         }
     };
 
-    const navigate = useNavigate();
     const handlePlaceAnOrderClick = (): void => {
         navigate("/menu");
     };
@@ -67,12 +71,11 @@ const OrderPage = () => {
             {cartItems.length === 0 ? (
                 <div>
                     <h1>Your cart is empty</h1>
-                    <Button label="Place an Order" onClick={handlePlaceAnOrderClick} variant="primary"/>
+                    <Button label="Place an Order" onClick={handlePlaceAnOrderClick} variant="primary" />
                 </div>
             ) : (
                 <>
                     <h1>Finish your order</h1>
-
                     <div className="order-items">
                         {cartItems.map((item) => (
                             <div key={item.id} className="order-item">
