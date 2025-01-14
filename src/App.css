@@ -6,3 +6,19 @@
   --color-light-blue: #F5FBFC;
   --color-grey: #546285;
 }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+}
