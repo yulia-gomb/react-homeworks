@@ -1,16 +1,25 @@
 import './OrderPage.css';
+import React from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
-import { removeFromCart, updateQuantity, clearCart } from "../../store/cartSlice";
+import {
+    removeFromCart,
+    updateQuantity,
+    clearCart,
+    selectFormData,
+    selectErrors,
+    setFormData, setErrors
+} from "../../store/cartSlice";
 import Button from "../../components/button/Button";
-import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { MENU_PATH, ORDER_CONFIRMATION_PATH } from "../../contstants/constants";
+import { Errors } from '../../store/cartSlice';
 
 
 const OrderPage = () => {
     const cartItems = useSelector((state: RootState) => state.cart.items);
-    const [formData, setFormData] = useState({ street: '', house: '' });
-    const [errors, setErrors] = useState({ street: '', house: '' });
+    const formData = useSelector(selectFormData);
+    const errors = useSelector(selectErrors);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -29,14 +38,14 @@ const OrderPage = () => {
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-        setErrors({ ...errors, [name]: '' });
+        dispatch(setFormData({ ...formData, [name]: value }));
+        dispatch(setErrors({ ...errors, [name]: '' }));
     };
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         let formIsValid = true;
-        const newErrors = { street: '', house: '' };
+        const newErrors: Errors = { street: '', house: '' };
 
         if (!formData.street.trim()) {
             newErrors.street = 'Street is required';
@@ -48,12 +57,12 @@ const OrderPage = () => {
             formIsValid = false;
         }
 
-        setErrors(newErrors);
+        dispatch(setErrors(newErrors));
 
         if (formIsValid) {
             const orderId = Math.floor(100000 + Math.random() * 900000);
             dispatch(clearCart());
-            navigate("/order-confirmation", {
+            navigate(ORDER_CONFIRMATION_PATH, {
                 state: {
                     orderId,
                     deliveryAddress: `${formData.street}, ${formData.house}`,
@@ -63,7 +72,7 @@ const OrderPage = () => {
     };
 
     const handlePlaceAnOrderClick = (): void => {
-        navigate("/menu");
+        navigate(MENU_PATH);
     };
 
     return (

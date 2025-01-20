@@ -1,19 +1,34 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from "./store";
 
 interface CartItem {
     id: string;
-    meal?: string;
-    img?: string;
-    price?: number;
+    meal: string;
+    img: string;
+    price: number;
     quantity: number;
+}
+
+interface FormData {
+    street: string;
+    house: string;
+}
+
+export interface Errors {
+    street: string;
+    house: string;
 }
 
 interface CartState {
     items: CartItem[];
+    formData: FormData;
+    errors: Errors;
 }
 
 const initialState: CartState = {
     items: [],
+    formData: { street: '', house: '' },
+    errors: { street: '', house: '' },
 };
 
 const cartSlice = createSlice({
@@ -21,12 +36,12 @@ const cartSlice = createSlice({
     initialState,
     reducers: {
         addToCart(state, action: PayloadAction<CartItem>) {
-            const { id, meal, img, price, quantity } = action.payload;
-            const existingItem = state.items.find(item => item.id === id);
+            const newItem = action.payload;
+            const existingItem = state.items.find(item => item.id === newItem.id);
             if (existingItem) {
-                existingItem.quantity += quantity;
+                existingItem.quantity += newItem.quantity;
             } else {
-                state.items.push({ id, meal, img, price, quantity });
+                state.items.push(newItem);
             }
         },
         updateQuantity(state, action: PayloadAction<{ id: string; quantity: number }>) {
@@ -42,17 +57,20 @@ const cartSlice = createSlice({
         clearCart(state) {
             state.items = [];
         },
+        setFormData(state, action: PayloadAction<FormData>) {
+            state.formData = action.payload;
+        },
+        setErrors(state, action: PayloadAction<Errors>) {
+            state.errors = action.payload;
+        }
     },
 });
 
-export const { addToCart, updateQuantity, removeFromCart, clearCart } = cartSlice.actions;
+export const { addToCart, updateQuantity, removeFromCart, clearCart, setFormData, setErrors } = cartSlice.actions;
 
 export const selectCartCount = (state: { cart: CartState }) =>
     state.cart.items.reduce((total, item) => total + item.quantity, 0);
-
-export const selectQuantityForItem = (state: { cart: CartState }, itemId: string) => {
-    const item = state.cart.items.find(item => item.id === itemId);
-    return item ? item.quantity : null;
-};
+export const selectFormData = (state: RootState) => state.cart.formData;
+export const selectErrors = (state: RootState) => state.cart.errors;
 
 export default cartSlice.reducer;
