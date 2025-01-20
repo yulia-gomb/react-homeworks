@@ -16,16 +16,12 @@ const useFetch = <T>(url: string, options: FetchOptions = {}): FetchResult<T> =>
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
+        let isCancelled = false;
+
         const fetchData = async () => {
             try {
                 setLoading(true);
                 const response = await fetch(url, options);
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                const responseBody = await response.json();
 
                 const logEntry = {
                     url,
@@ -33,24 +29,35 @@ const useFetch = <T>(url: string, options: FetchOptions = {}): FetchResult<T> =>
                     status: response.status,
                     timestamp: new Date().toISOString(),
                 };
-                const existingLogs = JSON.parse(localStorage.getItem("apiLogs") || "[]");
+                const existingLogs = JSON.parse(<string>localStorage.getItem("apiLogs")) || [];
                 localStorage.setItem("apiLogs", JSON.stringify([...existingLogs, logEntry]));
 
-                setData(responseBody);
-            } catch (err: unknown) {
-                console.error('Caught error:', err);
-                if (err instanceof Error) {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+
+                const responseBody = await response.json();
+
+                if (!isCancelled) {
+                    setData(responseBody);
+                }
+            } catch (err: any) {
+                if (!isCancelled) {
                     setError(err.message);
-                } else {
-                    setError("An unexpected error occurred");
                 }
             } finally {
-                setLoading(false);
+                if (!isCancelled) {
+                    setLoading(false);
+                }
             }
         };
 
         fetchData();
-    }, [url, options]);
+
+        return () => {
+            isCancelled = true;
+        };
+    }, [url]);
 
     return { data, loading, error };
 };
