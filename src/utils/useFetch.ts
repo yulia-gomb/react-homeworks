@@ -1,9 +1,19 @@
 import { useState, useEffect } from "react";
 
-const useFetch = (url, options = {}) => {
-    const [data, setData] = useState(null);
+interface FetchOptions extends RequestInit {
+    body?: any;
+}
+
+interface FetchResult<T> {
+    data: T | null;
+    loading: boolean;
+    error: string | null;
+}
+
+const useFetch = <T>(url: string, options: FetchOptions = {}): FetchResult<T> => {
+    const [data, setData] = useState<T | null>(null);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         let isCancelled = false;
@@ -19,7 +29,7 @@ const useFetch = (url, options = {}) => {
                     status: response.status,
                     timestamp: new Date().toISOString(),
                 };
-                const existingLogs = JSON.parse(localStorage.getItem("apiLogs")) || [];
+                const existingLogs = JSON.parse(<string>localStorage.getItem("apiLogs")) || [];
                 localStorage.setItem("apiLogs", JSON.stringify([...existingLogs, logEntry]));
 
                 if (!response.ok) {
@@ -31,7 +41,7 @@ const useFetch = (url, options = {}) => {
                 if (!isCancelled) {
                     setData(responseBody);
                 }
-            } catch (err) {
+            } catch (err: any) {
                 if (!isCancelled) {
                     setError(err.message);
                 }

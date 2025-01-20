@@ -1,13 +1,24 @@
 import './MenuItem.css';
-import PropTypes from "prop-types";
-import Button from "../button/Button.jsx";
-import { useState } from "react";
+import Button from "../button/Button";
+import { ChangeEvent, useState } from "react";
+
+interface MenuItemProps {
+    item: {
+        id: string;
+        meal: string;
+        category?: string;
+        img: string;
+        price: number;
+        instructions: string;
+    };
+    onAddToCart: (itemId: string, quantity: number) => void;
+}
 
 
-const MenuItem = ({ item, onAddToCart }) => {
+const MenuItem = ({ item, onAddToCart }: MenuItemProps) => {
     const [quantity, setQuantity] = useState(1);
 
-    const handleQuantityChange = (event) => {
+    const handleQuantityChange = (event: ChangeEvent<HTMLInputElement>) => {
         setQuantity(parseInt(event.target.value, 10));
     };
 
@@ -40,17 +51,6 @@ const MenuItem = ({ item, onAddToCart }) => {
             </div>
         </div>
     );
-};
-
-MenuItem.propTypes = {
-    item: PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        img: PropTypes.string.isRequired,
-        meal: PropTypes.string.isRequired,
-        instructions: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-    }).isRequired,
-    onAddToCart: PropTypes.func.isRequired,
 };
 
 export default MenuItem;

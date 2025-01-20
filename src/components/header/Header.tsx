@@ -1,10 +1,13 @@
 import './Header.css';
 import logoImage from '../../assets/icons/Logo.png';
 import cartImage from '../../assets/icons/cart.png';
-import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-const Header = ({ cartCount }) => {
+type HeaderProps = {
+    cartCount: number;
+};
+
+const Header = ({ cartCount }: HeaderProps) => {
     return (
         <header className="header">
             <div className="logo">
@@ -24,10 +27,6 @@ const Header = ({ cartCount }) => {
             </div>
         </header>
     );
-};
-
-Header.propTypes = {
-    cartCount: PropTypes.number.isRequired,
 };
 
 export default Header;

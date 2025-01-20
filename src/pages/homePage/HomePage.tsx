@@ -9,15 +9,15 @@ import {
     TrustPilot,
     TrustPilotText,
     Highlight
-} from "./HomePage.styled.js";
-import Button from "../../components/button/Button.jsx";
+} from "./HomePage.styled";
+import Button from "../../components/button/Button";
 import { useNavigate } from "react-router-dom";
 import homeImage from '../../assets/images/home.png';
 
 const HomePage = () => {
     const navigate = useNavigate();
 
-    const handlePlaceAnOrderClick = () => {
+    const handlePlaceAnOrderClick = (): void => {
         navigate("/menu");
     };
 

@@ -1,27 +1,42 @@
 import './MenuPage.css';
-import MenuItem from "../../components/menuItem/MenuItem.jsx";
-import Button from "../../components/button/Button.jsx";
-import Tooltip from "../../components/tooltip/Tooltip.jsx";
-import { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import useFetch from "../../utils/useFetch.js";
+import MenuItem from "../../components/menuItem/MenuItem";
+import Button from "../../components/button/Button";
+import Tooltip from "../../components/tooltip/Tooltip";
+import { useEffect, useMemo, useState } from "react";
+import useFetch from "../../utils/useFetch";
 
 const API_URL = "https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/meals";
 
-const fetchOptions = {
-    method: "GET",
-    headers: {
-        "Content-Type": "application/json",
-    },
+interface MenuItemType {
+    id: string;
+    meal: string;
+    category: string;
+    img: string;
+    price: number;
+    instructions: string;
+}
+
+type MenuPageProps = {
+    onAddToCart: (itemId: string, quantity: number) => void;
 };
 
-const MenuPage = ({ onAddToCart }) => {
-    const [selectedCategory, setSelectedCategory] = useState(null);
+
+const MenuPage = ({ onAddToCart }: MenuPageProps) => {
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [visibleItemsCount, setVisibleItemsCount] = useState(6);
 
-    const { data: menuItems, loading, error } = useFetch(API_URL, fetchOptions);
+    const fetchOptions = useMemo(() => ({
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    }), []);
 
-    const categories = menuItems ? Array.from(new Set(menuItems.map(item => item.category))) : [];
+    const { data: menuItems, loading, error } = useFetch<MenuItemType[]>(API_URL, fetchOptions);
+
+    const categories: string[] = useMemo(() => {
+        return menuItems ? Array.from(new Set(menuItems.map(item => item.category))) : [];
+    }, [menuItems]);
 
     useEffect(() => {
         if (menuItems && menuItems.length > 0 && !selectedCategory) {
@@ -29,7 +44,7 @@ const MenuPage = ({ onAddToCart }) => {
         }
     }, [menuItems, categories, selectedCategory]);
 
-    const handleCategoryClick = (category) => {
+    const handleCategoryClick = (category: string) => {
         setSelectedCategory(category);
         setVisibleItemsCount(6);
     };
@@ -38,7 +53,7 @@ const MenuPage = ({ onAddToCart }) => {
         setVisibleItemsCount(prevCount => prevCount + 6);
     };
 
-    const filteredItems = menuItems ? menuItems.filter(item => item.category === selectedCategory) : [];
+    const filteredItems = menuItems?.filter(item => item.category === selectedCategory) || [];
     const itemsToShow = filteredItems.slice(0, visibleItemsCount);
     const isSeeMoreVisible = filteredItems.length > visibleItemsCount;
 
@@ -91,8 +106,5 @@ const MenuPage = ({ onAddToCart }) => {
     );
 };
 
-MenuPage.propTypes = {
-    onAddToCart: PropTypes.func.isRequired,
-};
 
 export default MenuPage;
