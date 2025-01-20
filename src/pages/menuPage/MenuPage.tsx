@@ -2,58 +2,36 @@ import './MenuPage.css';
 import MenuItem from "../../components/menuItem/MenuItem";
 import Button from "../../components/button/Button";
 import Tooltip from "../../components/tooltip/Tooltip";
-import { useEffect, useMemo, useState } from "react";
-import useFetch from "../../utils/useFetch";
-
-const API_URL = "https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/meals";
-
-interface MenuItemType {
-    id: string;
-    meal: string;
-    category: string;
-    img: string;
-    price: number;
-    instructions: string;
-}
-
-type MenuPageProps = {
-    onAddToCart: (itemId: string, quantity: number) => void;
-};
+import { useEffect } from "react";
+import { fetchMenuItems, setSelectedCategory, incrementVisibleItemsCount } from "../../store/menuSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../store/store";
+import { addToCart } from "../../store/cartSlice";
 
 
-const MenuPage = ({ onAddToCart }: MenuPageProps) => {
-    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-    const [visibleItemsCount, setVisibleItemsCount] = useState(6);
-
-    const fetchOptions = useMemo(() => ({
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
-    }), []);
-
-    const { data: menuItems, loading, error } = useFetch<MenuItemType[]>(API_URL, fetchOptions);
-
-    const categories: string[] = useMemo(() => {
-        return menuItems ? Array.from(new Set(menuItems.map(item => item.category))) : [];
-    }, [menuItems]);
+const MenuPage = () => {
+    const dispatch = useDispatch<AppDispatch>();
+    const { menuItems, loading, error, selectedCategory, visibleItemsCount } = useSelector((state: RootState) => state.menu);
 
     useEffect(() => {
-        if (menuItems && menuItems.length > 0 && !selectedCategory) {
-            setSelectedCategory(categories[0]);
-        }
-    }, [menuItems, categories, selectedCategory]);
+        dispatch(fetchMenuItems());
+    }, [dispatch]);
+
+    const categories = Array.from(new Set(menuItems.map(item => item.category)));
 
     const handleCategoryClick = (category: string) => {
-        setSelectedCategory(category);
-        setVisibleItemsCount(6);
+        dispatch(setSelectedCategory(category));
     };
 
     const handleSeeMoreClick = () => {
-        setVisibleItemsCount(prevCount => prevCount + 6);
+        dispatch(incrementVisibleItemsCount());
     };
 
-    const filteredItems = menuItems?.filter(item => item.category === selectedCategory) || [];
+    const handleAddToCart = (itemId: string, quantity: number) => {
+        dispatch(addToCart({ id: itemId, quantity }));
+    };
+
+    const filteredItems = menuItems.filter(item => item.category === selectedCategory);
     const itemsToShow = filteredItems.slice(0, visibleItemsCount);
     const isSeeMoreVisible = filteredItems.length > visibleItemsCount;
 
@@ -74,7 +52,7 @@ const MenuPage = ({ onAddToCart }: MenuPageProps) => {
             <MenuItem
                 key={item.id}
                 item={item}
-                onAddToCart={onAddToCart}
+                onAddToCart={handleAddToCart}
             />
         ));
     };
@@ -92,7 +70,7 @@ const MenuPage = ({ onAddToCart }: MenuPageProps) => {
                         key={index}
                         label={category}
                         onClick={() => handleCategoryClick(category)}
-                        variant={selectedCategory === category ? "primary" : "secondary"}
+                        variant={selectedCategory === category ? 'primary' : 'secondary'}
                     />
                 ))}
             </div>
@@ -105,6 +83,5 @@ const MenuPage = ({ onAddToCart }: MenuPageProps) => {
         </div>
     );
 };
-
 
 export default MenuPage;
