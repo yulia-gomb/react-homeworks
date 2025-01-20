@@ -1,6 +1,7 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
+import { LOGIN_PATH } from "../contstants/constants";
 
 
 const ProtectedRoute = () => {
@@ -10,7 +11,7 @@ const ProtectedRoute = () => {
     return isLoggedIn ? (
         <Outlet />
     ) : (
-        <Navigate to="/login" state={{ from: location }} replace />
+        <Navigate to={LOGIN_PATH} state={{ from: location }} replace />
     );
 };
 

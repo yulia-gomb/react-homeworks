@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setFormData, setErrors, resetForm, loginSuccess } from "../../store/loginSlice";
 import { RootState } from "../../store/store";
 import { useLocation, useNavigate } from "react-router-dom";
+import { MENU_PATH } from "../../contstants/constants";
 
 const LoginPage: React.FC = () => {
     const dispatch = useDispatch();
@@ -13,7 +14,7 @@ const LoginPage: React.FC = () => {
 
     const formData = useSelector((state: RootState) => state.login.formData);
     const errors = useSelector((state: RootState) => state.login.errors);
-    const redirectTo = location.state?.from?.pathname || "/menu";
+    const redirectTo = location.state?.from?.pathname || {MENU_PATH};
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
         const { name, value } = e.target;
