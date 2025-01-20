@@ -4,41 +4,30 @@ import Button from "../../components/button/Button.jsx";
 import Tooltip from "../../components/tooltip/Tooltip.jsx";
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-
+import useFetch from "../../utils/useFetch.js";
 
 const API_URL = "https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/meals";
 
+const fetchOptions = {
+    method: "GET",
+    headers: {
+        "Content-Type": "application/json",
+    },
+};
+
 const MenuPage = ({ onAddToCart }) => {
     const [selectedCategory, setSelectedCategory] = useState(null);
-    const [menuItems, setMenuItems] = useState([]);
-    const [categories, setCategories] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
     const [visibleItemsCount, setVisibleItemsCount] = useState(6);
 
+    const { data: menuItems, loading, error } = useFetch(API_URL, fetchOptions);
+
+    const categories = menuItems ? Array.from(new Set(menuItems.map(item => item.category))) : [];
+
     useEffect(() => {
-        const fetchMenuItems = async () => {
-            try {
-                const response = await fetch(API_URL);
-                if (!response.ok) {
-                    throw new Error("Error fetching data");
-                }
-                const data = await response.json();
-
-                const uniqueCategories = Array.from(new Set(data.map(item => item.category)));
-
-                setMenuItems(data);
-                setCategories(uniqueCategories);
-                setSelectedCategory(uniqueCategories[0]);
-                setLoading(false);
-            } catch (error) {
-                setError(error.message);
-                setLoading(false);
-            }
-        };
-
-        fetchMenuItems();
-    }, []);
+        if (menuItems && menuItems.length > 0 && !selectedCategory) {
+            setSelectedCategory(categories[0]);
+        }
+    }, [menuItems, categories, selectedCategory]);
 
     const handleCategoryClick = (category) => {
         setSelectedCategory(category);
@@ -49,9 +38,31 @@ const MenuPage = ({ onAddToCart }) => {
         setVisibleItemsCount(prevCount => prevCount + 6);
     };
 
-    const filteredItems = menuItems.filter(item => item.category === selectedCategory);
+    const filteredItems = menuItems ? menuItems.filter(item => item.category === selectedCategory) : [];
     const itemsToShow = filteredItems.slice(0, visibleItemsCount);
     const isSeeMoreVisible = filteredItems.length > visibleItemsCount;
+
+    const renderMenuItems = () => {
+        if (loading) {
+            return <p>Loading...</p>;
+        }
+
+        if (error) {
+            return <p>Error: {error}</p>;
+        }
+
+        if (itemsToShow.length === 0) {
+            return <p>No items available for this category.</p>;
+        }
+
+        return itemsToShow.map(item => (
+            <MenuItem
+                key={item.id}
+                item={item}
+                onAddToCart={onAddToCart}
+            />
+        ));
+    };
 
     return (
         <div className="menu">
@@ -71,19 +82,7 @@ const MenuPage = ({ onAddToCart }) => {
                 ))}
             </div>
             <div className="menu-items">
-                {loading ? (
-                    <p>Loading...</p>
-                ) : error ? (
-                    <p>Error: {error}</p>
-                ) : (
-                    itemsToShow.map(item => (
-                        <MenuItem
-                            key={item.id}
-                            item={item}
-                            onAddToCart={onAddToCart}
-                        />
-                    ))
-                )}
+                {renderMenuItems()}
             </div>
             {isSeeMoreVisible && (
                 <Button label="See more" onClick={handleSeeMoreClick} variant="primary" />
