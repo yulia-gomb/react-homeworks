@@ -6,6 +6,7 @@ import HomePage from "./pages/homePage/HomePage.jsx";
 import MenuPage from "./pages/menuPage/MenuPage.jsx";
 import { Routes, Route } from 'react-router-dom';
 import NotFoundPage from "./pages/notFoundPage/NotFoundPage.jsx";
+import LoginPage from "./pages/loginPage/LoginPage.jsx";
 
 
 const App = () => {
@@ -30,6 +31,7 @@ const App = () => {
             <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/menu" element={<MenuPage onAddToCart={handleAddToCart} />} />
+                <Route path="/login" element={<LoginPage />} />
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
             <Footer />
