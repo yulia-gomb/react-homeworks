@@ -1,4 +1,4 @@
-import React, { createContext, useContext, ReactNode, useState } from 'react';
+import React, { createContext, useContext, ReactNode, useState, useEffect } from 'react';
 
 type Theme = 'light' | 'dark';
 type ThemeContextType = {
@@ -6,8 +6,8 @@ type ThemeContextType = {
     toggleTheme: () => void;
 };
 
-const defaultState = {
-    theme: 'light' as Theme,
+const defaultState: ThemeContextType = {
+    theme: 'light',
     toggleTheme: () => {}
 };
 
@@ -22,10 +22,24 @@ type ThemeProviderProps = {
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     const [theme, setTheme] = useState<Theme>('light');
 
+    useEffect(() => {
+        const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const localTheme = localStorage.getItem('theme');
+        const initialTheme = localTheme ? (localTheme as Theme) : prefersDarkMode ? 'dark' : 'light';
+
+        setTheme(initialTheme);
+        document.body.className = initialTheme;
+
+        console.log("Initialized theme:", initialTheme);
+    }, []);
+
     const toggleTheme = () => {
         const newTheme = theme === 'light' ? 'dark' : 'light';
         setTheme(newTheme);
-        document.body.classList.toggle('dark-theme');
+        document.body.className = newTheme;
+        localStorage.setItem('theme', newTheme);
+
+        console.log("Current theme:", newTheme);
     };
 
     return (

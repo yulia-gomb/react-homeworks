@@ -32,13 +32,22 @@ a {
   color: inherit;
 }
 
-body.dark-theme {
+body.dark {
   background-color: #333;
   color: #ddd;
 }
 
-body.dark-theme .nav-item,
-body.dark-theme .theme-toggle-btn {
+body.dark .nav-item,
+body.dark .theme-toggle-btn {
   background-color: #333;
   color: #ddd;
+}
+
+body.dark p,
+body.dark a {
+  color: #ddd;
+}
+
+body.dark h1 {
+  color: white;
 }
