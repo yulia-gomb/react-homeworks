@@ -70,6 +70,10 @@ export const { addToCart, updateQuantity, removeFromCart, clearCart, setFormData
 
 export const selectCartCount = (state: { cart: CartState }) =>
     state.cart.items.reduce((total, item) => total + item.quantity, 0);
+export const selectQuantityForItem = (state: { cart: CartState }, itemId: string) => {
+    const item = state.cart.items.find(item => item.id === itemId);
+    return item ? item.quantity : null;
+};
 export const selectFormData = (state: RootState) => state.cart.formData;
 export const selectErrors = (state: RootState) => state.cart.errors;
 

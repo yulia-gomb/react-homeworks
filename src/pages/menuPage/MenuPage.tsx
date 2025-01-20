@@ -6,7 +6,6 @@ import { useEffect } from "react";
 import { fetchMenuItems, setSelectedCategory, incrementVisibleItemsCount } from "../../store/menuSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
-import { addToCart } from "../../store/cartSlice";
 
 
 const MenuPage = () => {
@@ -25,10 +24,6 @@ const MenuPage = () => {
 
     const handleSeeMoreClick = () => {
         dispatch(incrementVisibleItemsCount());
-    };
-
-    const handleAddToCart = (itemId: string, quantity: number) => {
-        dispatch(addToCart({ id: itemId, quantity }));
     };
 
     const filteredItems = menuItems.filter(item => item.category === selectedCategory);
@@ -52,7 +47,6 @@ const MenuPage = () => {
             <MenuItem
                 key={item.id}
                 item={item}
-                onAddToCart={handleAddToCart}
             />
         ));
     };
