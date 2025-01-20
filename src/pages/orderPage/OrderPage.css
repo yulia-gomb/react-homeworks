@@ -1,0 +1,140 @@
+.order-page {
+    padding: 20px;
+    text-align: center;
+}
+
+.order-page h1 {
+    color: var(--color-blue);
+    margin-bottom: 30px;
+    font-size: 50px;
+}
+
+.order-items {
+    margin: 0 50px 30px;
+}
+
+.order-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 15px;
+    background-color: var(--color-white);
+}
+
+.order-item-image {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+}
+
+.order-item-details {
+    flex-grow: 1;
+    padding: 0 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order-item-details h3 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.order-item-price {
+    color: var(--color-blue);
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.order-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.order-item-quantity {
+    width: 50px;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.order-item-remove {
+    background-color: var(--color-blue);
+    color: var(--color-white);
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.order-total {
+    margin: 0 60px 30px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 30px;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.order-total h2 {
+    margin: 0;
+    font-weight: bold;
+}
+
+.order-total-amount {
+    color: var(--color-blue);
+}
+
+.order-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    min-height: 70px;
+    margin-bottom: 5px;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    color: #333;
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.order-error-container {
+    min-height: 1rem;
+    padding-left: 10px;
+    margin-top: 10px;
+}
+
+.order-error-message {
+    color: red;
+    font-size: 0.8rem;
+    margin: 0;
+    display: block;
+    text-align: start;
+    visibility: hidden;
+    min-height: 18px;
+}
+
+.order-error-message.visible {
+    visibility: visible;
+}

@@ -1,0 +1,21 @@
+.confirmation-page {
+    text-align: center;
+    padding: 20px;
+}
+
+.confirmation-page h1 {
+    color: var(--color-blue);
+    font-size: 50px;
+    margin-bottom: 20px;
+}
+
+.confirmation-page p {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.confirmation-page span {
+    color: var(--color-blue);
+    font-size: 2rem;
+    margin-bottom: 20px;
+}

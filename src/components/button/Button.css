@@ -10,8 +10,17 @@
     color: var(--color-white);
 }
 
+.button.primary:hover {
+    background-color: #546285;
+}
+
 .button.secondary {
     background-color: transparent;
     color: var(--color-black);
     border: 1px solid var(--color-grey);
+}
+
+.button.secondary:hover {
+    background-color: #546285;
+    color: var(--color-white);
 }
