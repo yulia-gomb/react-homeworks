@@ -1,8 +1,9 @@
 import './MenuItem.css';
 import Button from "../button/Button";
-import { ChangeEvent, useState } from "react";
-import { useDispatch } from "react-redux";
-import { addToCart } from "../../store/cartSlice";
+import { ChangeEvent } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, updateQuantity, selectQuantityForItem } from "../../store/cartSlice";
+import { RootState } from "../../store/store";
 
 interface MenuItemProps {
     item: {
@@ -13,16 +14,15 @@ interface MenuItemProps {
         price: number;
         instructions: string;
     };
-    onAddToCart: (itemId: string, quantity: number) => void;
 }
 
 const MenuItem = ({ item }: MenuItemProps) => {
-    const [quantity, setQuantity] = useState(1);
     const dispatch = useDispatch();
+    const quantity = useSelector((state: RootState) => selectQuantityForItem(state, item.id)) || 1;
 
     const handleQuantityChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const value = parseInt(event.target.value, 10);
-        setQuantity(value > 0 ? value : 1);
+        const newQuantity = parseInt(event.target.value, 10);
+        dispatch(updateQuantity({ id: item.id, quantity: newQuantity > 0 ? newQuantity : 1 }));
     };
 
     const handleAddToCart = () => {
@@ -33,7 +33,6 @@ const MenuItem = ({ item }: MenuItemProps) => {
             price: item.price,
             quantity
         }));
-        setQuantity(1);
     };
 
     const instructions = item.instructions.length > 100

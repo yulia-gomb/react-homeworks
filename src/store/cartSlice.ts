@@ -22,9 +22,7 @@ const cartSlice = createSlice({
     reducers: {
         addToCart(state, action: PayloadAction<CartItem>) {
             const { id, meal, img, price, quantity } = action.payload;
-
             const existingItem = state.items.find(item => item.id === id);
-
             if (existingItem) {
                 existingItem.quantity += quantity;
             } else {
@@ -33,10 +31,9 @@ const cartSlice = createSlice({
         },
         updateQuantity(state, action: PayloadAction<{ id: string; quantity: number }>) {
             const { id, quantity } = action.payload;
-            const existingItem = state.items.find(item => item.id === id);
-
-            if (existingItem) {
-                existingItem.quantity = quantity;
+            const index = state.items.findIndex(item => item.id === id);
+            if (index !== -1) {
+                state.items[index].quantity = quantity;
             }
         },
         removeFromCart(state, action: PayloadAction<string>) {
@@ -52,5 +49,10 @@ export const { addToCart, updateQuantity, removeFromCart, clearCart } = cartSlic
 
 export const selectCartCount = (state: { cart: CartState }) =>
     state.cart.items.reduce((total, item) => total + item.quantity, 0);
+
+export const selectQuantityForItem = (state: { cart: CartState }, itemId: string) => {
+    const item = state.cart.items.find(item => item.id === itemId);
+    return item ? item.quantity : null;
+};
 
 export default cartSlice.reducer;
