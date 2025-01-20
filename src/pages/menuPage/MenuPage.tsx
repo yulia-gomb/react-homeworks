@@ -23,7 +23,7 @@ type MenuPageProps = {
 
 const MenuPage = ({ onAddToCart }: MenuPageProps) => {
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-    const [visibleItemsCount, setVisibleItemsCount] = useState<number>(6);
+    const [visibleItemsCount, setVisibleItemsCount] = useState(6);
 
     const fetchOptions = useMemo(() => ({
         method: "GET",
