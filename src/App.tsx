@@ -11,13 +11,8 @@ import { useAppDispatch, useAppSelector } from "./store/hooks";
 
 
 const App = () => {
-    const dispatch = useAppDispatch();
-
     const cartCount = useAppSelector(selectCartCount);
 
-    const handleAddToCart = (itemId: string, quantity: number): void => {
-        dispatch(addToCart({ id: itemId, quantity }));
-    };
 
     return (
         <>
