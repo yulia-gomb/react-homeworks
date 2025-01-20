@@ -31,3 +31,14 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+body.dark-theme {
+  background-color: #333;
+  color: #ddd;
+}
+
+body.dark-theme .nav-item,
+body.dark-theme .theme-toggle-btn {
+  background-color: #333;
+  color: #ddd;
+}

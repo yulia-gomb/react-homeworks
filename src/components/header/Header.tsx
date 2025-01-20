@@ -4,6 +4,9 @@ import cartImage from '../../assets/icons/cart.png';
 import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import { COMPANY_PATH, HOME_PATH, LOGIN_PATH, MENU_PATH, ORDER_PATH } from "../../contstants/constants";
+import { FaMoon, FaSun } from "react-icons/fa";
+import { useTheme } from "../../utils/themeContext";
 
 type HeaderProps = {
     cartCount: number;
@@ -14,8 +17,11 @@ const Header = ({ cartCount }: HeaderProps) => {
     const navigate = useNavigate();
 
     const handleLoginClick = () => {
-        navigate("/login", { state: { from: { pathname: "/menu" } } });
+        navigate(LOGIN_PATH, { state: { from: { pathname: MENU_PATH } } });
     };
+
+    const { theme, toggleTheme } = useTheme();
+
 
     return (
         <header className="header">
@@ -25,19 +31,19 @@ const Header = ({ cartCount }: HeaderProps) => {
 
             <nav className="nav">
                 <NavLink
-                    to="/"
+                    to={HOME_PATH}
                     className={({ isActive }) => isActive ? "nav-item active-item" : "nav-item"}
                 >
                     Home
                 </NavLink>
                 <NavLink
-                    to="/menu"
+                    to={MENU_PATH}
                     className={({ isActive }) => isActive ? "nav-item active-item" : "nav-item"}
                 >
                     Menu
                 </NavLink>
                 <NavLink
-                    to="/company"
+                    to={COMPANY_PATH}
                     className={({ isActive }) => isActive ? "nav-item active-item" : "nav-item"}
                 >
                     Company
@@ -49,11 +55,13 @@ const Header = ({ cartCount }: HeaderProps) => {
                         Login
                     </span>
                 )}
-
+                <button className="theme-toggle-btn" onClick={toggleTheme}>
+                    {theme === 'dark' ? <FaSun /> : <FaMoon />}
+                </button>
             </nav>
 
             <div className="cart">
-                <NavLink to="/order">
+                <NavLink to={ORDER_PATH}>
                     <img src={cartImage} alt="Cart" className="cart-icon" />
                     <span className="cart-count">{cartCount}</span>
                 </NavLink>
