@@ -6,11 +6,12 @@ const useFetch = (url, options = {}) => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
+        let isCancelled = false;
+
         const fetchData = async () => {
             try {
                 setLoading(true);
                 const response = await fetch(url, options);
-                const responseBody = await response.json();
 
                 const logEntry = {
                     url,
@@ -24,16 +25,29 @@ const useFetch = (url, options = {}) => {
                 if (!response.ok) {
                     throw new Error("Network response was not ok");
                 }
-                setData(responseBody);
+
+                const responseBody = await response.json();
+
+                if (!isCancelled) {
+                    setData(responseBody);
+                }
             } catch (err) {
-                setError(err.message);
+                if (!isCancelled) {
+                    setError(err.message);
+                }
             } finally {
-                setLoading(false);
+                if (!isCancelled) {
+                    setLoading(false);
+                }
             }
         };
 
         fetchData();
-    }, [url, options]);
+
+        return () => {
+            isCancelled = true;
+        };
+    }, [url]);
 
     return { data, loading, error };
 };
