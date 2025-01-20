@@ -2,22 +2,22 @@ import './MenuPage.css';
 import MenuItem from "../../components/menuItem/MenuItem.jsx";
 import Button from "../../components/button/Button.jsx";
 import Tooltip from "../../components/tooltip/Tooltip.jsx";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import useFetch from "../../utils/useFetch.js";
 
 const API_URL = "https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/meals";
 
+const fetchOptions = {
+    method: "GET",
+    headers: {
+        "Content-Type": "application/json",
+    },
+};
+
 const MenuPage = ({ onAddToCart }) => {
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [visibleItemsCount, setVisibleItemsCount] = useState(6);
-
-    const fetchOptions = useMemo(() => ({
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
-    }), []);
 
     const { data: menuItems, loading, error } = useFetch(API_URL, fetchOptions);
 
