@@ -1,9 +1,13 @@
-.order-page {
+.order {
     padding: 20px;
     text-align: center;
 }
 
-.order-page h1 {
+.order.dark {
+    background-color: var(--color-grey-2);
+}
+
+.order h1 {
     color: var(--color-blue);
     margin-bottom: 30px;
     font-size: 50px;
@@ -22,6 +26,11 @@
     padding: 25px;
     margin-bottom: 15px;
     background-color: var(--color-white);
+}
+
+.order-item.dark {
+    background-color: #999;
+    border: 1px solid var(--color-grey);
 }
 
 .order-item-image {
@@ -97,7 +106,6 @@
     max-width: 400px;
     margin: 0 auto;
 }
-
 
 .form-group {
     display: flex;

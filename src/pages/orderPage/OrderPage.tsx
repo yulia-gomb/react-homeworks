@@ -14,6 +14,7 @@ import Button from "../../components/button/Button";
 import { useNavigate } from "react-router-dom";
 import { MENU_PATH, ORDER_CONFIRMATION_PATH } from "../../contstants/constants";
 import { Errors } from '../../store/cartSlice';
+import { useTheme } from "../../utils/themeContext";
 
 
 const OrderPage = () => {
@@ -22,6 +23,10 @@ const OrderPage = () => {
     const errors = useSelector(selectErrors);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const { theme } = useTheme();
+    const isDarkTheme = theme === 'dark';
+    console.log(isDarkTheme);
 
     const handleQuantityChange = (id: string, quantity: number) => {
         dispatch(updateQuantity({ id, quantity }));
@@ -76,7 +81,7 @@ const OrderPage = () => {
     };
 
     return (
-        <div className="order-page">
+        <div className={`order ${isDarkTheme ? 'dark' : ''}`}>
             {cartItems.length === 0 ? (
                 <div>
                     <h1>Your cart is empty</h1>
@@ -87,7 +92,7 @@ const OrderPage = () => {
                     <h1>Finish your order</h1>
                     <div className="order-items">
                         {cartItems.map((item) => (
-                            <div key={item.id} className="order-item">
+                            <div key={item.id} className={`order-item ${isDarkTheme ? 'dark' : ''}`}>
                                 <img src={item.img} alt={item.meal} className="order-item-image" />
                                 <div className="order-item-details">
                                     <h3>{item.meal}</h3>
