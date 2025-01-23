@@ -1,20 +1,24 @@
-.confirmation-page {
+.confirmation {
     text-align: center;
     padding: 20px;
 }
 
-.confirmation-page h1 {
+.dark-theme {
+    background-color: var(--color-grey-2);
+}
+
+.confirmation h1 {
     color: var(--color-blue);
     font-size: 50px;
     margin-bottom: 20px;
 }
 
-.confirmation-page p {
+.confirmation p {
     font-size: 2rem;
     margin-bottom: 20px;
 }
 
-.confirmation-page span {
+.confirmation span {
     color: var(--color-blue);
     font-size: 2rem;
     margin-bottom: 20px;
