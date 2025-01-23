@@ -1,11 +1,16 @@
 import styled from "styled-components";
+import { Theme } from "../../utils/themeContext";
 
-export const Container = styled.div`
+type ContainerProps = {
+    theme: Theme;
+};
+
+export const Container = styled.div<ContainerProps>`
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #f9fdfd;
+    background-color: ${({ theme }) => theme === 'dark' ? '#777' : '#f9fdfd'};
 `;
 
 export const Content = styled.div`

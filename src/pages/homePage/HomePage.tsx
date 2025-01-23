@@ -13,16 +13,20 @@ import {
 import Button from "../../components/button/Button";
 import { useNavigate } from "react-router-dom";
 import homeImage from '../../assets/images/home.png';
+import { MENU_PATH } from "../../contstants/constants";
+import { useTheme } from "../../utils/themeContext";
+
 
 const HomePage = () => {
     const navigate = useNavigate();
+    const { theme } = useTheme();
 
     const handlePlaceAnOrderClick = (): void => {
-        navigate("/menu");
+        navigate(MENU_PATH);
     };
 
     return (
-        <Container>
+        <Container theme={theme}>
             <Content>
                 <TextSection>
                     <Heading>

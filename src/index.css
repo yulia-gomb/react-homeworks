@@ -39,7 +39,7 @@ body.dark {
 
 body.dark .nav-item,
 body.dark .theme-toggle-btn {
-  background-color: #333;
+  background-color: var(--color-grey-3);
   color: #ddd;
 }
 
@@ -49,5 +49,5 @@ body.dark a {
 }
 
 body.dark h1 {
-  color: white;
+  color: var(--color-white);
 }
