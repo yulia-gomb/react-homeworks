@@ -4,6 +4,7 @@ import { ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, updateQuantity, selectQuantityForItem } from "../../store/cartSlice";
 import { RootState } from "../../store/store";
+import { useTheme } from "../../utils/themeContext";
 
 interface MenuItemProps {
     item: {
@@ -19,6 +20,9 @@ interface MenuItemProps {
 const MenuItem = ({ item }: MenuItemProps) => {
     const dispatch = useDispatch();
     const quantity = useSelector((state: RootState) => selectQuantityForItem(state, item.id)) || 1;
+
+    const { theme } = useTheme();
+    const menuItemClass = theme === 'dark' ? 'menu-item dark-theme-item' : 'menu-item';
 
     const handleQuantityChange = (event: ChangeEvent<HTMLInputElement>) => {
         const newQuantity = parseInt(event.target.value, 10);
@@ -40,7 +44,7 @@ const MenuItem = ({ item }: MenuItemProps) => {
         : item.instructions;
 
     return (
-        <div className="menu-item">
+        <div className={menuItemClass}>
             <img src={item.img} alt={item.meal} />
             <div className="menu-item-info">
                 <h3>{item.meal}</h3>

@@ -6,11 +6,15 @@ import { useEffect } from "react";
 import { fetchMenuItems, setSelectedCategory, incrementVisibleItemsCount } from "../../store/menuSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
+import { useTheme } from "../../utils/themeContext";
 
 
 const MenuPage = () => {
     const dispatch = useDispatch<AppDispatch>();
     const { menuItems, loading, error, selectedCategory, visibleItemsCount } = useSelector((state: RootState) => state.menu);
+
+    const { theme } = useTheme();
+    const menuClass = theme === 'dark' ? 'menu dark-theme' : 'menu';
 
     useEffect(() => {
         dispatch(fetchMenuItems());
@@ -52,7 +56,7 @@ const MenuPage = () => {
     };
 
     return (
-        <div className="menu">
+        <div className={menuClass}>
             <h1>Browse our menu</h1>
             <p>
                 Use our menu to place an order online, or <Tooltip text="phone" tooltipText="+1-234-567-8901" /> our
