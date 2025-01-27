@@ -18,12 +18,14 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "types": ["react-next", "react-dom/next"],
+    "types": ["react-next", "react-dom/next", "jest"],
   },
   "include": [
     "src", "**/*.ts", "**/*.tsx", "src/custom.d.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "**/*.spec.ts",
+    "**/*.test.ts"
   ]
 }
