@@ -3,6 +3,10 @@
     background-color: var(--color-light-blue);
 }
 
+.dark-theme {
+    background-color: var(--color-grey-2);
+}
+
 .footer-content {
     display: flex;
     justify-content: space-between;

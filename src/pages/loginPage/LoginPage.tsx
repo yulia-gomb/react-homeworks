@@ -6,6 +6,7 @@ import { setFormData, setErrors, resetForm, loginSuccess } from "../../store/log
 import { RootState } from "../../store/store";
 import { useLocation, useNavigate } from "react-router-dom";
 import { MENU_PATH } from "../../contstants/constants";
+import { useTheme } from "../../utils/themeContext";
 
 const LoginPage: React.FC = () => {
     const dispatch = useDispatch();
@@ -15,6 +16,9 @@ const LoginPage: React.FC = () => {
     const formData = useSelector((state: RootState) => state.login.formData);
     const errors = useSelector((state: RootState) => state.login.errors);
     const redirectTo = location.state?.from?.pathname || {MENU_PATH};
+
+    const { theme } = useTheme();
+    const isDarkTheme = theme === 'dark';
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
         const { name, value } = e.target;
@@ -54,9 +58,9 @@ const LoginPage: React.FC = () => {
     };
 
     return (
-        <div className="login-container">
+        <div className={`login ${isDarkTheme ? 'dark' : ''}`}>
             <h1 className="title">Log in</h1>
-            <div className="form-wrapper">
+            <div className={`form-wrapper ${isDarkTheme ? 'dark' : ''}`}>
                 <form onSubmit={handleSubmit}>
                     <div className="form-field">
                         <label htmlFor="username" className="label">User name</label>

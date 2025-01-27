@@ -3,6 +3,7 @@ import logoImage from '../../assets/icons/Logo.png';
 import instLogo from '../../assets/icons/inst.png';
 import twitterLogo from '../../assets/icons/twitter.png';
 import youtubeLogo from '../../assets/icons/yt.png';
+import { useTheme } from "../../utils/themeContext";
 
 
 const Footer = () => {
@@ -14,8 +15,11 @@ const Footer = () => {
 
         const LINK_URL = "https://www.google.com/";
 
+    const { theme } = useTheme();
+    const footerClass = theme === 'dark' ? 'footer dark-theme' : 'footer';
+
         return (
-            <footer className="footer">
+            <footer className={footerClass}>
                 <div className="footer-content">
                     <div className="footer-left">
                         <img src={logoImage} alt="Logo" className="footer-logo" />

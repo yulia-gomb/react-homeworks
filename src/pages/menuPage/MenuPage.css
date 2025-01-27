@@ -4,6 +4,10 @@
     background-color: var(--color-light-blue);
 }
 
+.dark-theme {
+    background-color: var(--color-grey-2);
+}
+
 .menu h1 {
     font-size: 50px;
     color: var(--color-blue);

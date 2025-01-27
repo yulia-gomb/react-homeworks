@@ -19,28 +19,31 @@ import {
     ORDER_CONFIRMATION_PATH,
     ORDER_PATH
 } from "./contstants/constants";
+import { ThemeProvider } from "./utils/themeContext";
 
 
 const App = () => {
     const cartCount = useAppSelector(selectCartCount);
 
     return (
-        <div className="app-container">
-            <Header cartCount={cartCount} />
-            <main className="main-content">
-                <Routes>
-                    <Route path={HOME_PATH} element={<HomePage />} />
-                    <Route path={MENU_PATH} element={<MenuPage />} />
-                    <Route path={LOGIN_PATH} element={<LoginPage />} />
-                    <Route element={<ProtectedRoute />}>
-                        <Route path={ORDER_PATH} element={<OrderPage />} />
-                    </Route>
-                    <Route path={ORDER_CONFIRMATION_PATH} element={<OrderConfirmationPage />} />
-                    <Route path={NOT_FOUND_PATH} element={<NotFoundPage />} />
-                </Routes>
-            </main>
-            <Footer />
-        </div>
+        <ThemeProvider>
+            <div className="app-container">
+                <Header cartCount={cartCount} />
+                <main className="main-content">
+                    <Routes>
+                        <Route path={HOME_PATH} element={<HomePage />} />
+                        <Route path={MENU_PATH} element={<MenuPage />} />
+                        <Route path={LOGIN_PATH} element={<LoginPage />} />
+                        <Route element={<ProtectedRoute />}>
+                            <Route path={ORDER_PATH} element={<OrderPage />} />
+                        </Route>
+                        <Route path={ORDER_CONFIRMATION_PATH} element={<OrderConfirmationPage />} />
+                        <Route path={NOT_FOUND_PATH} element={<NotFoundPage />} />
+                    </Routes>
+                </main>
+                <Footer />
+            </div>
+        </ThemeProvider>
     );
 };
 

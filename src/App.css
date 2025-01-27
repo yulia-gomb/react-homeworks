@@ -5,6 +5,8 @@
   --color-blue: #35B8BE;
   --color-light-blue: #F5FBFC;
   --color-grey: #546285;
+  --color-grey-2: #777;
+  --color-grey-3: #333;
 }
 
 html, body {
