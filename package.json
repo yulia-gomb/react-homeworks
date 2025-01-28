@@ -13,7 +13,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@reduxjs/toolkit": "^2.5.0",
+    "@reduxjs/toolkit": "^2.5.1",
     "@types/jest": "^29.5.14",
     "@types/react-router-dom": "^5.3.3",
     "jest-environment-jsdom": "^29.7.0",

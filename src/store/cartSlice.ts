@@ -19,7 +19,7 @@ export interface Errors {
     house: string;
 }
 
-interface CartState {
+export interface CartState {
     items: CartItem[];
     formData: FormData;
     errors: Errors;
