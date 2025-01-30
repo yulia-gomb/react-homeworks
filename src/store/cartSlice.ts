@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from "./store";
 
-interface CartItem {
+export interface CartItem {
     id: string;
     meal: string;
     img: string;
@@ -9,7 +9,7 @@ interface CartItem {
     quantity: number;
 }
 
-interface FormData {
+export interface FormData {
     street: string;
     house: string;
 }
